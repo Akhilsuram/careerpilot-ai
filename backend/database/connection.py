@@ -1,7 +1,23 @@
-import sqlite3
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
-from backend.core.config import DATABASE_URL
+from backend.core.settings import settings
 
-DB_PATH = DATABASE_URL.replace("sqlite:///", "")
+engine = create_engine(
+    settings.DATABASE_URL,
+    echo=False
+)
 
-connection = sqlite3.connect(DB_PATH)
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
+
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

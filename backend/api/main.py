@@ -1,11 +1,9 @@
 from fastapi import FastAPI
-from backend.api.health import router as health_router
 
-app = FastAPI()
+from backend.api.health import router
 
-app.include_router(health_router)
+app = FastAPI(
+    title="CareerPilot AI"
+)
 
-
-@app.get("/")
-def root():
-    return {"message": "CareerPilot AI Backend Running"}
+app.include_router(router)

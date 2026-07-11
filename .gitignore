@@ -20,3 +20,13 @@ __pycache__/
 # OS Files
 .DS_Store
 Thumbs.db
+
+storage/database/*.db
+
+storage/uploads/
+
+storage/temp/
+
+storage/logs/
+
+.vscode/
