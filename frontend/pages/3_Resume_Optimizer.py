@@ -3,7 +3,7 @@ import json
 import requests
 import streamlit as st
 
-from frontend.config import BACKEND_URL
+from config import API_BASE_URL
 
 st.set_page_config(
     page_title="Resume Optimizer",
@@ -47,7 +47,7 @@ if st.button("Optimize Resume", use_container_width=True):
     with st.spinner("Optimizing Resume..."):
 
         response = requests.post(
-            f"{BACKEND_URL}/resume-optimizer/optimize",
+            f"{API_BASE_URL}/resume-optimizer/optimize",
             json=payload,
             timeout=120,
         )
