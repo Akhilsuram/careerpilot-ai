@@ -16,3 +16,14 @@ class GeminiProvider(BaseProvider):
         response = self.model.generate_content(prompt)
 
         return response.text
+
+    def stream(self, prompt: str):
+        raise NotImplementedError("Gemini streaming not implemented yet.")
+
+
+    def health_check(self) -> bool:
+        try:
+            self.generate("Say OK")
+            return True
+        except Exception:
+            return False
