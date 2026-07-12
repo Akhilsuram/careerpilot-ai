@@ -57,7 +57,13 @@ if st.button("Find Matching Jobs", use_container_width=True):
 
         st.stop()
 
-    jobs = response.json()["data"]["jobs"]
+    result = response.json()["data"]
+
+    st.success(
+        f"Provider: {result['provider']}"
+)
+
+    jobs = result["jobs"]
 
     st.success(f"{len(jobs)} Jobs Found")
 
