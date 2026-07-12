@@ -1,5 +1,5 @@
 import time
-
+from backend.utils.response_builder import ResponseBuilder
 from backend.agents.roadmap_agent import RoadmapAgent
 from backend.tools.roadmap_formatter import RoadmapFormatter
 
@@ -31,9 +31,8 @@ class RoadmapService:
             2,
         )
 
-        return {
-            "success": True,
-            "message": "Career roadmap generated successfully.",
-            "data": result,
-            "processing_time": processing_time,
-        }
+        return ResponseBuilder.success(
+    message="Roadmap generated successfully.",
+    data=result,
+    processing_time=processing_time,
+)

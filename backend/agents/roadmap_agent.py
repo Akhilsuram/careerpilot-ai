@@ -1,5 +1,5 @@
 import json
-
+from backend.utils.json_parser import JSONParser
 from backend.providers.provider_manager import ProviderManager
 
 
@@ -57,8 +57,4 @@ Target Role
 
         response = self.provider.generate(prompt)
 
-        response = response.replace("```json", "")
-        response = response.replace("```", "")
-        response = response.strip()
-
-        return json.loads(response)
+        return JSONParser.parse(response)

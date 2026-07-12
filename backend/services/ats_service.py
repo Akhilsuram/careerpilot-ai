@@ -1,5 +1,5 @@
 import time
-
+from backend.utils.response_builder import ResponseBuilder
 from backend.agents.ats_agent import ATSAgent
 
 
@@ -27,9 +27,8 @@ class ATSService:
             2
         )
 
-        return {
-            "success": True,
-            "message": "ATS analysis completed successfully.",
-            "data": result,
-            "processing_time": processing_time,
-        }
+        return ResponseBuilder.success(
+            message="ATS analysis completed successfully.",
+            data=result,
+            processing_time=processing_time,
+        )

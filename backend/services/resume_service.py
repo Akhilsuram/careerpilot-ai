@@ -4,14 +4,13 @@ from backend.agents.resume_agent import ResumeAgent
 from backend.models.resume import Resume, ResumeStatus
 from backend.repositories.resume_repository import ResumeRepository
 from backend.tools.pdf_parser import PDFParser
+from backend.utils.response_builder import ResponseBuilder
 
 
 class ResumeService:
 
     def __init__(self, db):
-
         self.repository = ResumeRepository(db)
-
         self.agent = ResumeAgent()
 
     def execute(self, file_path: str):
@@ -29,13 +28,20 @@ class ResumeService:
 
         if existing_resume:
 
-            return {
+            processing_time = 0
+
+            result = {
                 "resume": existing_resume,
                 "text": existing_resume.extracted_text,
                 "hash": existing_resume.content_hash,
                 "parsed": existing_resume.parsed_json,
-                "processing_time": 0,
             }
+
+            return ResponseBuilder.success(
+                message="Resume already analyzed.",
+                data=result,
+                processing_time=processing_time,
+            )
 
         # Analyze Resume
         parsed = self.agent.analyze(text)
@@ -54,12 +60,17 @@ class ResumeService:
         # Save to database
         resume = self.repository.create(resume)
 
-        elapsed = round(time.time() - start, 2)
+        processing_time = round(time.time() - start, 2)
 
-        return {
+        result = {
             "resume": resume,
             "text": text,
             "hash": content_hash,
             "parsed": parsed,
-            "processing_time": elapsed,
         }
+
+        return ResponseBuilder.success(
+            message="Resume analyzed successfully.",
+            data=result,
+            processing_time=processing_time,
+        )

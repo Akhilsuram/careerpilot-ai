@@ -1,5 +1,5 @@
 import time
-
+from backend.utils.response_builder import ResponseBuilder
 from backend.agents.job_match_agent import JobMatchAgent
 from backend.tools.job_matcher import JobMatcher
 
@@ -34,9 +34,8 @@ class JobMatchService:
             2,
         )
 
-        return {
-            "success": True,
-            "message": "Job matching completed successfully.",
-            "data": result,
-            "processing_time": processing_time,
-        }
+        return ResponseBuilder.success(
+    message="Job matching completed successfully.",
+    data=result,
+    processing_time=processing_time,
+)

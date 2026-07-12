@@ -1,5 +1,5 @@
 import time
-
+from backend.utils.response_builder import ResponseBuilder
 from backend.agents.interview_agent import InterviewAgent
 from backend.tools.interview_formatter import InterviewFormatter
 
@@ -33,9 +33,8 @@ class InterviewService:
             2,
         )
 
-        return {
-            "success": True,
-            "message": "Interview questions generated successfully.",
-            "data": result,
-            "processing_time": processing_time,
-        }
+        return ResponseBuilder.success(
+    message="Interview questions generated successfully.",
+    data=result,
+    processing_time=processing_time,
+)

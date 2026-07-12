@@ -1,5 +1,5 @@
 import json
-
+from backend.utils.json_parser import JSONParser
 from backend.providers.provider_manager import ProviderManager
 
 
@@ -73,7 +73,7 @@ Resume:
         json_text = response[start:end + 1]
 
         try:
-            return json.loads(json_text)
+            return JSONParser.parse(response)
 
         except json.JSONDecodeError as e:
             print("\n========= JSON PARSE ERROR =========")

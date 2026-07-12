@@ -1,5 +1,5 @@
 import time
-
+from backend.utils.response_builder import ResponseBuilder
 from backend.agents.resume_optimizer_agent import ResumeOptimizerAgent
 from backend.tools.resume_formatter import ResumeFormatter
 
@@ -32,9 +32,8 @@ class ResumeOptimizerService:
             2
         )
 
-        return {
-            "success": True,
-            "message": "Resume optimized successfully.",
-            "data": result,
-            "processing_time": processing_time,
-        }
+        return ResponseBuilder.success(
+    message="Resume optimized successfully.",
+    data=result,
+    processing_time=processing_time,
+)
