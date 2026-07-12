@@ -7,30 +7,66 @@ from backend.utils.json_parser import JSONParser
 class PlannerAgent:
 
     def __init__(self):
+
         self.provider = ProviderManager()
 
-    def plan(self, user_goal: str):
+    def plan(
+        self,
+        user_goal: str,
+    ):
 
         prompt = f"""
-You are an AI Planner Agent.
+You are an AI Planning Agent.
 
-User Goal:
+Your task is to analyze the user's goal and decide which AI agents should execute.
 
-{user_goal}
+Available Agents
 
-Identify:
+resume_analysis
 
-1. Target Role
-2. Preferred Location
+ats
+
+resume_optimizer
+
+job_match
+
+interview
+
+roadmap
+
+Rules
+
+If the user wants interview preparation,
+only include interview.
+
+If the user wants resume improvement,
+include ats and resume_optimizer.
+
+If the user wants jobs,
+include ats, job_match and roadmap.
+
+If the user wants everything,
+include every agent.
+
+Extract
+
+target_role
+
+location
 
 Return ONLY valid JSON.
 
-Format:
+Format
 
 {{
     "target_role":"",
-    "location":""
+    "location":"",
+    "agents":[]
 }}
+
+Goal
+
+{user_goal}
 """
 
         response = self.provider.generate(prompt)

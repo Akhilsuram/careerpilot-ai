@@ -30,42 +30,51 @@ class CareerOrchestrator:
 
         plan = self.planner.plan(user_goal)
 
-        role = plan["target_role"]
-
-        location = plan["location"]
-
-        ats = self.ats.analyze(
-            resume_data,
-            user_goal,
-        )
-
-        optimized = self.optimizer.optimize(
-            resume_data,
-            role,
-        )
-
-        jobs = self.jobs.find_jobs(
-            resume_data,
-            role,
-            location,
-        )
-
-        interview = self.interview.generate_questions(
-            resume_data,
-            role,
-            user_goal,
-        )
-
-        roadmap = self.roadmap.generate(
-            resume_data,
-            role,
-        )
-
-        return {
-            "plan": plan,
-            "ats": ats,
-            "resume_optimizer": optimized,
-            "job_matches": jobs,
-            "interview": interview,
-            "roadmap": roadmap,
+        report = {
+            "plan": plan
         }
+
+        role = plan.get("target_role", "")
+
+        location = plan.get("location", "")
+
+        agents = plan.get("agents", [])
+
+        if "ats" in agents:
+
+            report["ats"] = self.ats.analyze(
+                resume_data,
+                user_goal,
+            )
+
+        if "resume_optimizer" in agents:
+
+            report["resume_optimizer"] = self.optimizer.optimize(
+                resume_data,
+                role,
+            )
+
+        if "job_match" in agents:
+
+            report["job_matches"] = self.jobs.find_jobs(
+                resume_data,
+                role,
+                location,
+            )
+
+        if "interview" in agents:
+
+            report["interview"] = self.interview.generate_questions(
+                resume_data,
+                role,
+                user_goal,
+            )
+
+        if "roadmap" in agents:
+
+            report["roadmap"] = self.roadmap.generate(
+                resume_data,
+                role,
+            )
+
+        return report
