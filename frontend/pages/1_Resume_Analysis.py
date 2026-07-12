@@ -1,14 +1,18 @@
 import requests
 import streamlit as st
 
-from frontend.config import API_BASE_URL
+from config import API_BASE_URL
+
+from utils.session_manager import SessionManager
+from components.sidebar import render_sidebar
 
 st.set_page_config(
     page_title="Resume Analysis",
     page_icon="📄",
     layout="wide",
+    
 )
-
+render_sidebar()
 st.title("📄 Resume Analysis")
 st.write("Upload your resume and let CareerPilot AI analyze it.")
 
@@ -64,6 +68,9 @@ if uploaded_file is not None:
                 st.stop()
 
             result = response.json()
+            SessionManager.set_resume(
+                result["data"]
+            )
 
             data = result["data"]
 

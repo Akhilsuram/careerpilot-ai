@@ -1,24 +1,33 @@
-import json
-
 import requests
 import streamlit as st
 
 from config import API_BASE_URL
+from utils.session_manager import SessionManager
+from components.sidebar import render_sidebar
 
 st.set_page_config(
     page_title="Resume Optimizer",
     page_icon="🚀",
     layout="wide",
 )
-
+render_sidebar()
 st.title("🚀 AI Resume Optimizer")
 
 st.write("Improve your resume for your target role.")
 
-resume_json = st.text_area(
-    "Resume JSON",
-    height=300,
-)
+resume = SessionManager.get_resume()
+
+if resume:
+
+    st.success("Using latest analyzed resume.")
+
+else:
+
+    st.warning(
+        "Analyze Resume first."
+    )
+
+    st.stop()
 
 target_role = st.text_input(
     "Target Role",
@@ -27,7 +36,7 @@ target_role = st.text_input(
 
 if st.button("Optimize Resume", use_container_width=True):
 
-    if not resume_json.strip():
+    if not resume:
 
         st.warning("Please enter Resume JSON")
 
@@ -40,7 +49,7 @@ if st.button("Optimize Resume", use_container_width=True):
         st.stop()
 
     payload = {
-        "resume_data": json.loads(resume_json),
+        "resume_data": resume,
         "target_role": target_role,
     }
 

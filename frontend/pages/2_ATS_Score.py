@@ -2,13 +2,15 @@ import requests
 import streamlit as st
 
 from config import API_BASE_URL
+from utils.session_manager import SessionManager
+from components.sidebar import render_sidebar
 
 st.set_page_config(
     page_title="ATS Score",
     page_icon="📊",
     layout="wide",
 )
-
+render_sidebar()
 st.title("📊 ATS Score Checker")
 
 st.markdown("Analyze your resume against a Job Description.")
@@ -17,10 +19,20 @@ st.divider()
 
 st.subheader("Resume JSON")
 
-resume_json = st.text_area(
-    "Paste Resume JSON",
-    height=300,
-)
+resume = SessionManager.get_resume()
+
+if resume:
+
+    st.success("Using latest analyzed resume.")
+
+else:
+
+    st.warning(
+        "Analyze a resume first."
+    )
+
+    st.stop()
+
 
 st.subheader("Job Description")
 
@@ -31,7 +43,7 @@ job_description = st.text_area(
 
 if st.button("Analyze ATS Score", use_container_width=True):
 
-    if not resume_json.strip():
+    if not resume:
 
         st.warning("Please paste Resume JSON.")
 
@@ -46,7 +58,7 @@ if st.button("Analyze ATS Score", use_container_width=True):
     try:
 
         payload = {
-            "resume_data": eval(resume_json),
+            "resume_data": resume,
             "job_description": job_description,
         }
 
