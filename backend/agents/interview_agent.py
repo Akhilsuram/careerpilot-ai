@@ -6,7 +6,6 @@ from backend.providers.provider_manager import ProviderManager
 class InterviewAgent:
 
     def __init__(self):
-
         self.provider = ProviderManager()
 
     def generate_questions(
@@ -17,60 +16,65 @@ class InterviewAgent:
     ):
 
         prompt = f"""
-You are an Expert Technical Interviewer.
+You are an expert Technical Interviewer.
 
-Generate 15 interview questions.
+Generate exactly 15 interview questions.
 
-Mix:
+For EACH question provide:
 
-HR
+1. category
+2. difficulty
+3. interview question
+4. a detailed model answer (150–250 words)
 
-Projects
+The answer should be interview-ready and technically accurate.
 
-Python
+Mix questions from:
 
-SQL
-
-Machine Learning
-
-Behavioral
-
-DSA
+- HR
+- Projects
+- Python
+- SQL
+- Machine Learning
+- Behavioral
+- DSA
 
 Return ONLY valid JSON.
 
-Format
+Do NOT include markdown.
+Do NOT include ```json.
+Do NOT leave the answer field empty.
+
+Return JSON in exactly this format:
 
 {{
-"questions":[
-{{
-"category":"",
-"difficulty":"",
-"question":"",
-"answer":""
-}}
-]
+  "questions": [
+    {{
+      "category": "",
+      "difficulty": "",
+      "question": "",
+      "answer": "A detailed interview-ready answer."
+    }}
+  ]
 }}
 
-Resume
+Resume:
 
 {json.dumps(resume_data, indent=2)}
 
-Role
+Target Role:
 
 {target_role}
 
-Job Description
+Job Description:
 
-{job_description}
+{job_description if job_description else "Not Provided"}
 """
 
         response = self.provider.generate(prompt)
 
         response = response.replace("```json", "")
-
         response = response.replace("```", "")
-
         response = response.strip()
 
         return json.loads(response)

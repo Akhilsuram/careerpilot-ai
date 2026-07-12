@@ -1,0 +1,64 @@
+import json
+
+from backend.providers.provider_manager import ProviderManager
+
+
+class RoadmapAgent:
+
+    def __init__(self):
+
+        self.provider = ProviderManager()
+
+    def generate(
+        self,
+        resume_data: dict,
+        target_role: str,
+    ):
+
+        prompt = f"""
+You are an Expert Career Mentor.
+
+Generate a personalized learning roadmap.
+
+Requirements:
+
+• 6-8 weeks
+
+• Weekly goals
+
+• Weekly topics
+
+• Keep it practical.
+
+Return ONLY valid JSON.
+
+Format:
+
+{{
+"estimated_duration":"",
+
+"roadmap":[
+{{
+"week":1,
+"topics":[],
+"goals":[]
+}}
+]
+}}
+
+Resume
+
+{json.dumps(resume_data, indent=2)}
+
+Target Role
+
+{target_role}
+"""
+
+        response = self.provider.generate(prompt)
+
+        response = response.replace("```json", "")
+        response = response.replace("```", "")
+        response = response.strip()
+
+        return json.loads(response)
