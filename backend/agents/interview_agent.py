@@ -74,3 +74,18 @@ Job Description:
         response = self.provider.generate(prompt)
 
         return JSONParser.parse(response)
+    def execute(
+        self,
+        context,
+    ):
+
+        role = context.planner_output.get(
+            "target_role",
+            "",
+        )
+
+        return self.generate_questions(
+            context.resume_data,
+            role,
+            context.user_goal,
+        )

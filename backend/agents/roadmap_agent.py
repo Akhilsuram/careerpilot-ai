@@ -58,3 +58,17 @@ Target Role
         response = self.provider.generate(prompt)
 
         return JSONParser.parse(response)
+    def execute(
+        self,
+        context,
+    ):
+
+        role = context.planner_output.get(
+            "target_role",
+            "",
+        )
+
+        return self.generate(
+            context.resume_data,
+            role,
+        )

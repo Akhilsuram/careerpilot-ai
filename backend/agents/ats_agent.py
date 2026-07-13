@@ -59,3 +59,12 @@ Job Description:
         response = self.provider.generate(prompt)
 
         return JSONParser.parse(response)
+    def execute(
+        self,
+        context,
+    ):
+
+        return self.analyze(
+            context.resume_data,
+            context.user_goal,
+        )

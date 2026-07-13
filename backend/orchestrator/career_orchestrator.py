@@ -9,13 +9,15 @@ from backend.orchestrator.execution_context import ExecutionContext
 from backend.orchestrator.execution_engine import ExecutionEngine
 from backend.orchestrator.report_aggregator import ReportAggregator
 from backend.orchestrator.task_scheduler import TaskScheduler
-
-
+from backend.orchestrator.agent_executor import AgentExecutor
+from backend.orchestrator.parallel_executor import ParallelExecutor
 class CareerOrchestrator:
 
     def __init__(self):
 
         self.planner = PlannerAgent()
+
+        self.parallel = ParallelExecutor()
 
         self.scheduler = TaskScheduler()
 
@@ -24,6 +26,8 @@ class CareerOrchestrator:
         self.aggregator = ReportAggregator()
 
         self.registry = AgentRegistry()
+
+        self.executor = AgentExecutor()
 
     def execute(
         self,
@@ -54,71 +58,41 @@ class CareerOrchestrator:
             context.planner_output
         )
 
+        tasks = []
+
         for agent_name in schedule:
 
-            if agent_name == "ats":
+            agent = self.registry.get(agent_name)
 
-                result = self.engine.run(
-                    "ats",
-                    self.registry.get("ats").analyze,
-                    resume_data,
-                    user_goal,
-                )
+            tasks.append(
+                {
+                    "name": agent_name,
+                    "function": lambda a=agent: self.engine.run(
+                        agent_name,
+                        self.executor.execute,
+                        a,
+                        context,
+                    ),
+                }
+            )
 
-            elif agent_name == "resume_optimizer":
+        results = self.parallel.run(tasks)
 
-                result = self.engine.run(
-                    "resume_optimizer",
-                    self.registry.get("resume_optimizer").optimize,
-                    resume_data,
-                    role,
-                )
-
-            elif agent_name == "job_match":
-
-                result = self.engine.run(
-                    "job_match",
-                    self.registry.get("job_match").find_jobs,
-                    resume_data,
-                    role,
-                    location,
-                )
-
-            elif agent_name == "interview":
-
-                result = self.engine.run(
-                    "interview",
-                    self.registry.get("interview").generate_questions,
-                    resume_data,
-                    role,
-                    user_goal,
-                )
-
-            elif agent_name == "roadmap":
-
-                result = self.engine.run(
-                    "roadmap",
-                    self.registry.get("roadmap").generate,
-                    resume_data,
-                    role,
-                )
-
-            else:
-                continue
+        for agent_name, result in results.items():
 
             context.execution_log.append(
                 {
                     "agent": agent_name,
                     "status": result["success"],
+                    "time": result.get("time", 0),
                 }
             )
 
-            context.timings[agent_name] = result["time"]
+            context.timings[agent_name] = result.get(
+                "time",
+                0,
+            )
 
             if result["success"]:
 
                 context.results[agent_name] = result["result"]
-
-        return self.aggregator.build(
-            context
-        )

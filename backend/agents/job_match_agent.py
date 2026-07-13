@@ -53,3 +53,23 @@ Resume:
         response = self.provider.generate(prompt)
 
         return JSONParser.parse(response)
+    def execute(
+        self,
+        context,
+    ):
+
+        role = context.planner_output.get(
+            "target_role",
+            "",
+        )
+
+        location = context.planner_output.get(
+            "location",
+            "",
+        )
+
+        return self.find_jobs(
+            context.resume_data,
+            role,
+            location,
+        )
