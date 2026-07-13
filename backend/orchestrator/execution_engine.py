@@ -1,7 +1,12 @@
 import time
 
+from backend.orchestrator.retry_policy import RetryPolicy
+
 
 class ExecutionEngine:
+
+    def __init__(self):
+        self.retry = RetryPolicy()
 
     def run(
         self,
@@ -15,7 +20,8 @@ class ExecutionEngine:
 
         try:
 
-            result = function(
+            result = self.retry.execute(
+                function,
                 *args,
                 **kwargs,
             )

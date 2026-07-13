@@ -11,6 +11,7 @@ from backend.orchestrator.report_aggregator import ReportAggregator
 from backend.orchestrator.task_scheduler import TaskScheduler
 from backend.orchestrator.agent_executor import AgentExecutor
 from backend.orchestrator.parallel_executor import ParallelExecutor
+from backend.orchestrator.execution_logger import ExecutionLogger
 class CareerOrchestrator:
 
     def __init__(self):
@@ -18,6 +19,8 @@ class CareerOrchestrator:
         self.planner = PlannerAgent()
 
         self.parallel = ParallelExecutor()
+
+        self.logger = ExecutionLogger()
 
         self.scheduler = TaskScheduler()
 
@@ -81,12 +84,15 @@ class CareerOrchestrator:
         for agent_name, result in results.items():
 
             context.execution_log.append(
-                {
-                    "agent": agent_name,
-                    "status": result["success"],
-                    "time": result.get("time", 0),
-                }
-            )
+    self.logger.log(
+        agent_name,
+        result["success"],
+        result.get(
+            "time",
+            0,
+        ),
+    )
+)
 
             context.timings[agent_name] = result.get(
                 "time",
