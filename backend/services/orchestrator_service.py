@@ -1,7 +1,7 @@
 import time
 
+from backend.memory.memory_manager import MemoryManager
 from backend.orchestrator.career_orchestrator import CareerOrchestrator
-from backend.repositories.career_history_repository import CareerHistoryRepository
 from backend.utils.response_builder import ResponseBuilder
 
 
@@ -11,7 +11,7 @@ class OrchestratorService:
 
         self.orchestrator = CareerOrchestrator()
 
-        self.repository = CareerHistoryRepository()
+        self.memory = MemoryManager()
 
     def execute(
         self,
@@ -35,12 +35,31 @@ class OrchestratorService:
                 "",
             )
 
-        self.repository.save(
+        # Save complete career report
+        self.memory.save_career_report(
             resume_id=1,
             goal=user_goal,
             ats_score=str(ats_score),
             report=report,
         )
+
+        # Save ATS score separately
+        if ats_score:
+
+            try:
+
+                score = float(ats_score)
+
+                if score <= 1:
+                    score *= 100
+
+                self.memory.save_ats_score(
+                    resume_id=1,
+                    score=score,
+                )
+
+            except Exception:
+                pass
 
         processing_time = round(
             time.time() - start,
