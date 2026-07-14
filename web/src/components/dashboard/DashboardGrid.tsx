@@ -1,32 +1,43 @@
-import QuickActions from "./QuickActions";
+import ATSChart from "../charts/ATSChart";
+
+import ActivityTimeline from "./ActivityTimeline";
+import RecommendedJobs from "./RecommendedJobs";
+import WeeklyGoals from "./WeeklyGoals";
+import UpcomingTasks from "./UpcomingTasks";
+import AIAssistant from "./AIAssistant";
 
 export default function DashboardGrid() {
   return (
-    <div className="grid grid-cols-3 gap-6">
-      <div className="col-span-2 rounded-2xl bg-white p-6 shadow">
-        <h2 className="mb-4 text-2xl font-semibold">
-          Dashboard Overview
-        </h2>
+    <div className="space-y-6">
 
-        <QuickActions />
+      <div className="grid grid-cols-3 gap-6">
 
-        <div className="mt-8 h-64 rounded-xl border-2 border-dashed border-gray-300 flex items-center justify-center text-gray-400">
-          ATS Chart (Coming Next)
+        <div className="col-span-2">
+
+          <ATSChart />
+
         </div>
+
+        <ActivityTimeline />
+
       </div>
 
-      <div className="rounded-2xl bg-white p-6 shadow">
-        <h2 className="mb-4 text-xl font-semibold">
-          AI Insights
-        </h2>
+      <div className="grid grid-cols-2 gap-6">
 
-        <ul className="space-y-3 text-gray-700">
-          <li>✅ Resume is ATS friendly.</li>
-          <li>📈 Add Docker & AWS to improve score.</li>
-          <li>💼 42 matching jobs available.</li>
-          <li>🎯 Practice SQL interview questions.</li>
-        </ul>
+        <RecommendedJobs />
+
+        <AIAssistant />
+
       </div>
+
+      <div className="grid grid-cols-2 gap-6">
+
+        <WeeklyGoals />
+
+        <UpcomingTasks />
+
+      </div>
+
     </div>
   );
 }

@@ -1,0 +1,19 @@
+import api from "./api";
+
+export async function analyzeResume(file: File) {
+  const formData = new FormData();
+
+  formData.append("file", file);
+
+  const response = await api.post(
+    "/resume/analyze",
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
+  return response.data;
+}
