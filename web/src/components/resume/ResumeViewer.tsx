@@ -4,6 +4,13 @@ import { useEffect, useState } from "react";
 
 import ResumeProfile from "./ResumeProfile";
 import ResumeSkills from "./ResumeSkills";
+import ResumeEducation from "./ResumeEducation";
+import ResumeExperience from "./ResumeExperience";
+import ResumeProjects from "./ResumeProjects";
+import ResumeCertifications from "./ResumeCertifications";
+import ResumeSummary from "./ResumeSummary";
+import ResumeMetadata from "./ResumeMetadata";
+import ResumeStats from "./ResumeStats";
 
 export default function ResumeViewer() {
 
@@ -50,10 +57,35 @@ export default function ResumeViewer() {
       <ResumeProfile
         resume={resume.data}
       />
+      <ResumeStats resume={resume.data} />
+
+<ResumeSummary
+  summary={resume.data.summary}
+/>
+
+<ResumeMetadata
+  resume={resume}
+/>
 
       <ResumeSkills
         skills={resume.data.skills}
       />
+
+      <ResumeEducation
+  education={resume.data.education}
+/>
+
+<ResumeExperience
+  experience={resume.data.experience}
+/>
+
+<ResumeProjects
+  projects={resume.data.projects}
+/>
+
+<ResumeCertifications
+  certifications={resume.data.certifications}
+/>
 
     </div>
 
