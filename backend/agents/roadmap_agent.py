@@ -1,9 +1,17 @@
 import json
 from backend.utils.json_parser import JSONParser
 from backend.providers.provider_manager import ProviderManager
+from backend.agents.base_agent import BaseAgent
+from backend.orchestrator.agent_metadata import AgentMetadata
 
+class RoadmapAgent(BaseAgent):
 
-class RoadmapAgent:
+    metadata = AgentMetadata(
+        name="Roadmap Agent",
+        version="1.0.0",
+        description="Creates personalized career roadmaps.",
+        priority=5,
+    )
 
     def __init__(self):
 

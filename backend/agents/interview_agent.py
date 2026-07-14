@@ -1,9 +1,17 @@
 import json
 from backend.utils.json_parser import JSONParser
 from backend.providers.provider_manager import ProviderManager
+from backend.agents.base_agent import BaseAgent
+from backend.orchestrator.agent_metadata import AgentMetadata
 
+class InterviewAgent(BaseAgent):
 
-class InterviewAgent:
+    metadata = AgentMetadata(
+        name="Interview Agent",
+        version="1.0.0",
+        description="Generates interview questions and answers.",
+        priority=3,
+    )
 
     def __init__(self):
         self.provider = ProviderManager()

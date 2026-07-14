@@ -1,9 +1,17 @@
 import json
 from backend.utils.json_parser import JSONParser
 from backend.providers.provider_manager import ProviderManager
+from backend.agents.base_agent import BaseAgent
+from backend.orchestrator.agent_metadata import AgentMetadata
 
+class ATSAgent(BaseAgent):
 
-class ATSAgent:
+    metadata = AgentMetadata(
+        name="ATS Agent",
+        version="1.0.0",
+        description="Analyzes ATS compatibility.",
+        priority=1,
+    )
 
     def __init__(self):
 

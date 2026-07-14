@@ -1,9 +1,17 @@
 import json
 from backend.utils.json_parser import JSONParser
 from backend.providers.provider_manager import ProviderManager
+from backend.agents.base_agent import BaseAgent
+from backend.orchestrator.agent_metadata import AgentMetadata
 
+class JobMatchAgent(BaseAgent):
 
-class JobMatchAgent:
+    metadata = AgentMetadata(
+        name="Job Match Agent",
+        version="1.0.0",
+        description="Finds matching jobs based on resume and goals.",
+        priority=4,
+    )
 
     def __init__(self):
 

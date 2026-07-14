@@ -29,3 +29,9 @@ class AgentRegistry:
         return list(
             self._agents.keys()
         )
+    def metadata(self):
+
+        return {
+            key: value.metadata
+            for key, value in self._agents.items()
+        }

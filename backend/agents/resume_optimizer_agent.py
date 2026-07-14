@@ -1,9 +1,17 @@
 import json
 from backend.utils.json_parser import JSONParser
 from backend.providers.provider_manager import ProviderManager
+from backend.agents.base_agent import BaseAgent
+from backend.orchestrator.agent_metadata import AgentMetadata
 
+class ResumeOptimizerAgent(BaseAgent):
 
-class ResumeOptimizerAgent:
+    metadata = AgentMetadata(
+        name="Resume Optimizer",
+        version="1.0.0",
+        description="Optimizes resumes for target roles.",
+        priority=2,
+    )
 
     def __init__(self):
 
