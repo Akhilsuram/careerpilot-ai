@@ -1,46 +1,38 @@
 from backend.agents.job_match_agent import JobMatchAgent
-from backend.services.job_api_service import JobAPIService
-from backend.tools.job_ranker import JobRanker
+from backend.services.job_search_service import JobSearchService
 
 
 class JobProviderManager:
 
     def __init__(self):
 
-        self.api = JobAPIService()
+        self.search = JobSearchService()
 
         self.ai = JobMatchAgent()
 
     def search_jobs(
         self,
-        resume_data: dict,
-        role: str,
-        location: str,
+        resume_data,
+        role,
+        location,
     ):
 
         try:
 
-            jobs = self.api.search(
+            jobs = self.search.search(
+                resume_data,
                 role,
                 location,
             )
 
-            ranked = JobRanker.rank(
-                jobs,
-                resume_data.get(
-                    "skills",
-                    [],
-                ),
-            )
-
             return {
-                "provider": "Remotive API",
-                "jobs": ranked[:10],
+                "provider": "Multi Provider",
+                "jobs": jobs,
             }
 
         except Exception:
 
-            ai_jobs = self.ai.find_jobs(
+            result = self.ai.find_jobs(
                 resume_data,
                 role,
                 location,
@@ -48,5 +40,5 @@ class JobProviderManager:
 
             return {
                 "provider": "AI Fallback",
-                "jobs": ai_jobs["jobs"],
+                "jobs": result["jobs"],
             }
