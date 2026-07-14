@@ -57,22 +57,26 @@ if st.button(
 
     report = response.json()["data"]
 
-    ats = report.get("ats", {})
-    resume_optimizer = report.get("resume_optimizer", {})
-    job_matches = report.get("job_matches", {})
-    interview = report.get("interview", {})
-    roadmap = report.get("roadmap", {})
+    # Safe loading (handles None values)
+    ats = report.get("ats") or {}
+    resume_optimizer = report.get("resume_optimizer") or {}
+    job_matches = report.get("job_matches") or {}
+    interview = report.get("interview") or {}
+    roadmap = report.get("roadmap") or {}
 
     c1, c2, c3, c4 = st.columns(4)
 
+    # ATS
     with c1:
 
         score = ats.get("overall_score", 0)
 
         try:
             score = float(score)
+
             if score <= 1:
                 score *= 100
+
         except Exception:
             score = 0
 
@@ -81,19 +85,25 @@ if st.button(
             f"{int(score)}%",
         )
 
+    # Job Matches
     with c2:
+
         metric_card(
             "Job Matches",
             len(job_matches.get("jobs", [])),
         )
 
+    # Interview
     with c3:
+
         metric_card(
             "Interview Questions",
             len(interview.get("questions", [])),
         )
 
+    # Roadmap
     with c4:
+
         metric_card(
             "Roadmap Weeks",
             len(roadmap.get("roadmap", [])),
@@ -101,18 +111,26 @@ if st.button(
 
     st.divider()
 
+    # Resume Recommendations
     title("Resume Recommendations")
 
-    recommendations = resume_optimizer.get("recommendations", [])
+    recommendations = resume_optimizer.get(
+        "recommendations",
+        [],
+    )
 
     if recommendations:
+
         for item in recommendations:
             st.success(item)
+
     else:
+
         st.info("No recommendations available.")
 
     st.divider()
 
+    # Job Matches
     title("Matching Jobs")
 
     jobs = job_matches.get("jobs", [])
@@ -123,63 +141,116 @@ if st.button(
 
             with st.container(border=True):
 
-                st.subheader(job.get("role", "Unknown Role"))
+                st.subheader(
+                    job.get(
+                        "role",
+                        "Unknown Role",
+                    )
+                )
 
-                st.write(f"🏢 {job.get('company', 'N/A')}")
-                st.write(f"📍 {job.get('location', 'N/A')}")
+                st.write(
+                    f"🏢 {job.get('company', 'N/A')}"
+                )
 
-                score = job.get("match_score", 0)
+                st.write(
+                    f"📍 {job.get('location', 'N/A')}"
+                )
+
+                score = job.get(
+                    "match_score",
+                    0,
+                )
 
                 try:
+
                     score = float(score)
+
                     if score <= 1:
                         score *= 100
+
                 except Exception:
+
                     score = 0
 
-                st.progress(int(score) / 100)
+                st.progress(score / 100)
 
-                st.write(f"**Match Score:** {int(score)}%")
+                st.write(
+                    f"**Match Score:** {int(score)}%"
+                )
 
-                st.write("**Missing Skills**")
+                missing = job.get(
+                    "missing_skills",
+                    [],
+                )
 
-                missing = job.get("missing_skills", [])
+                st.write("### Missing Skills")
 
                 if missing:
+
                     st.write(", ".join(missing))
+
                 else:
-                    st.success("No missing skills 🎉")
+
+                    st.success(
+                        "No missing skills 🎉"
+                    )
+
+                st.write("### Why this Match")
+
+                st.info(
+                    job.get(
+                        "reason",
+                        "No reason available.",
+                    )
+                )
 
     else:
+
         st.info("No matching jobs found.")
 
     st.divider()
 
+    # Interview Questions
     title("Interview Questions")
 
-    questions = interview.get("questions", [])
+    questions = interview.get(
+        "questions",
+        [],
+    )
 
     if questions:
 
         for q in questions[:5]:
 
-            with st.expander(q.get("question", "Question")):
+            with st.expander(
+                q.get(
+                    "question",
+                    "Interview Question",
+                )
+            ):
 
-                answer = q.get("answer")
-
-                if answer:
-                    st.write(answer)
-                else:
-                    st.warning("Suggested answer not available.")
+                st.write(
+                    q.get(
+                        "answer",
+                        "Answer not available.",
+                    )
+                )
 
     else:
-        st.info("Interview questions not generated.")
+
+        st.info(
+            "Interview questions were not generated."
+        )
 
     st.divider()
 
+    # Career Roadmap
     title("Career Roadmap")
 
-    weeks = roadmap.get("roadmap", [])
+    weeks = roadmap.get(
+        "roadmap",
+        [],
+    )
 
     if weeks:
 
@@ -187,17 +258,30 @@ if st.button(
 
             with st.container(border=True):
 
-                st.subheader(f"Week {week.get('week', '')}")
+                st.subheader(
+                    f"Week {week.get('week', '')}"
+                )
 
                 st.write("### Topics")
 
-                for topic in week.get("topics", []):
+                for topic in week.get(
+                    "topics",
+                    [],
+                ):
+
                     st.success(topic)
 
                 st.write("### Goals")
 
-                for goal in week.get("goals", []):
-                    st.info(goal)
+                for g in week.get(
+                    "goals",
+                    [],
+                ):
+
+                    st.info(g)
 
     else:
-        st.info("Roadmap not generated.")
+
+        st.info(
+            "Career roadmap was not generated."
+        )

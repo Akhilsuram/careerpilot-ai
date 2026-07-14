@@ -35,19 +35,23 @@ async def analyze_resume(
 
         service = ResumeService(db)
 
-        result = service.execute(str(file_path))
+        response = service.execute(str(file_path))
+
+        result = response["data"]
 
         parsed = result["parsed"]
 
+        resume = result["resume"]
+
         return ResumeAnalysisResponse(
-            success=True,
-            message="Resume analyzed successfully.",
-            resume_id=result["resume"].id,
-            status=result["resume"].status.value,
+            success=response["success"],
+            message=response["message"],
+            resume_id=resume.id,
+            status=resume.status.value,
             provider=settings.LLM_PROVIDER,
             model=settings.DEFAULT_MODEL,
-            processing_time=result["processing_time"],
-            created_at=result["resume"].created_at,
+            processing_time=response["processing_time"],
+            created_at=resume.created_at,
             data=ResumeData(**parsed),
         )
 

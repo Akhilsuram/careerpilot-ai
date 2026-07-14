@@ -1,17 +1,14 @@
-from backend.agents.ats_agent import ATSAgent
-from backend.agents.interview_agent import InterviewAgent
-from backend.agents.job_match_agent import JobMatchAgent
 from backend.agents.planner_agent import PlannerAgent
-from backend.agents.resume_optimizer_agent import ResumeOptimizerAgent
-from backend.agents.roadmap_agent import RoadmapAgent
 from backend.orchestrator.agent_registry import AgentRegistry
+from backend.orchestrator.agent_executor import AgentExecutor
 from backend.orchestrator.execution_context import ExecutionContext
 from backend.orchestrator.execution_engine import ExecutionEngine
+from backend.orchestrator.execution_logger import ExecutionLogger
+from backend.orchestrator.parallel_executor import ParallelExecutor
 from backend.orchestrator.report_aggregator import ReportAggregator
 from backend.orchestrator.task_scheduler import TaskScheduler
-from backend.orchestrator.agent_executor import AgentExecutor
-from backend.orchestrator.parallel_executor import ParallelExecutor
-from backend.orchestrator.execution_logger import ExecutionLogger
+
+
 class CareerOrchestrator:
 
     def __init__(self):
@@ -43,19 +40,8 @@ class CareerOrchestrator:
             user_goal=user_goal,
         )
 
-        context.planner_output = self.planner.plan(
-            user_goal
-        )
-
-        role = context.planner_output.get(
-            "target_role",
-            "",
-        )
-
-        location = context.planner_output.get(
-            "location",
-            "",
-        )
+        # Planner
+        context.planner_output = self.planner.plan(user_goal)
 
         schedule = self.scheduler.build_schedule(
             context.planner_output
@@ -70,8 +56,8 @@ class CareerOrchestrator:
             tasks.append(
                 {
                     "name": agent_name,
-                    "function": lambda a=agent: self.engine.run(
-                        agent_name,
+                    "function": lambda a=agent, n=agent_name: self.engine.run(
+                        n,
                         self.executor.execute,
                         a,
                         context,
@@ -79,20 +65,18 @@ class CareerOrchestrator:
                 }
             )
 
+        # Run agents
         results = self.parallel.run(tasks)
 
         for agent_name, result in results.items():
 
             context.execution_log.append(
-    self.logger.log(
-        agent_name,
-        result["success"],
-        result.get(
-            "time",
-            0,
-        ),
-    )
-)
+                self.logger.log(
+                    agent_name,
+                    result["success"],
+                    result.get("time", 0),
+                )
+            )
 
             context.timings[agent_name] = result.get(
                 "time",
@@ -102,3 +86,8 @@ class CareerOrchestrator:
             if result["success"]:
 
                 context.results[agent_name] = result["result"]
+
+        # Aggregate final report
+        report = self.aggregator.aggregate(context)
+
+        return report

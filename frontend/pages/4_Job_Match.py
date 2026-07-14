@@ -23,7 +23,7 @@ if not resume:
 
     st.stop()
 
-st.success(f"Resume Loaded : {resume.get('name','Unknown')}")
+st.success(f"Resume Loaded: {resume.get('name', 'Unknown')}")
 
 target_role = st.text_input(
     "Target Role",
@@ -37,13 +37,25 @@ location = st.text_input(
 
 if st.button("Find Matching Jobs", use_container_width=True):
 
+    if not target_role.strip():
+
+        st.warning("Please enter a Target Role.")
+
+        st.stop()
+
+    if not location.strip():
+
+        st.warning("Please enter a Preferred Location.")
+
+        st.stop()
+
     payload = {
         "resume_data": resume,
         "target_role": target_role,
         "location": location,
     }
 
-    with st.spinner("Finding Jobs..."):
+    with st.spinner("Finding Matching Jobs..."):
 
         response = requests.post(
             f"{API_BASE_URL}/job-match/search",
@@ -59,37 +71,58 @@ if st.button("Find Matching Jobs", use_container_width=True):
 
     result = response.json()["data"]
 
-    st.success(
-        f"Provider: {result['provider']}"
-)
+    jobs = result.get("jobs", [])
 
-    jobs = result["jobs"]
+    st.success(f"✅ {len(jobs)} Matching Jobs Found")
 
-    st.success(f"{len(jobs)} Jobs Found")
+    if not jobs:
+
+        st.info("No matching jobs were found.")
+
+        st.stop()
 
     for job in jobs:
 
         with st.container(border=True):
 
-            st.subheader(job["role"])
+            st.subheader(job.get("role", "Unknown Role"))
 
-            st.write("🏢 Company:", job["company"])
+            st.write(f"🏢 **Company:** {job.get('company', 'N/A')}")
 
-            st.write("📍 Location:", job["location"])
+            st.write(f"📍 **Location:** {job.get('location', 'N/A')}")
+
+            score = job.get("match_score", 0)
+
+            try:
+                score = float(score)
+                if score <= 1:
+                    score *= 100
+            except Exception:
+                score = 0
 
             st.metric(
                 "Match Score",
-                f'{job["match_score"]}%'
+                f"{int(score)}%",
             )
 
             st.write("### Required Skills")
 
-            st.write(job["required_skills"])
+            required = job.get("required_skills", [])
+
+            if required:
+                st.write(", ".join(required))
+            else:
+                st.write("N/A")
 
             st.write("### Missing Skills")
 
-            st.write(job["missing_skills"])
+            missing = job.get("missing_skills", [])
+
+            if missing:
+                st.write(", ".join(missing))
+            else:
+                st.success("No missing skills 🎉")
 
             st.write("### Why this Match?")
 
-            st.info(job["reason"])
+            st.info(job.get("reason", "No explanation provided."))

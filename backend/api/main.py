@@ -12,7 +12,10 @@ from backend.api.v1.roadmap import router as roadmap_router
 from backend.api.v1.orchestrator import (
     router as orchestrator_router,
 )
-
+from backend.api.v1.analytics import router as analytics_router
+from backend.api.v1.analytics_history import (
+    router as analytics_history_router,
+)
 from backend.api.v1.resume_optimizer import (
     router as resume_optimizer_router,
 )
@@ -35,3 +38,7 @@ app.include_router(
     orchestrator_router
 )
 app.include_router(career_history_router)
+app.include_router(analytics_router)
+app.include_router(
+    analytics_history_router
+)
