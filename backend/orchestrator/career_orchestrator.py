@@ -7,6 +7,8 @@ from backend.orchestrator.execution_logger import ExecutionLogger
 from backend.orchestrator.parallel_executor import ParallelExecutor
 from backend.orchestrator.report_aggregator import ReportAggregator
 from backend.orchestrator.task_scheduler import TaskScheduler
+from backend.orchestrator.trace_manager import TraceManager
+from backend.core.settings import settings
 
 
 class CareerOrchestrator:
@@ -28,6 +30,8 @@ class CareerOrchestrator:
         self.registry = AgentRegistry()
 
         self.executor = AgentExecutor()
+
+        self.trace = TraceManager()
 
     def execute(
         self,
@@ -77,6 +81,24 @@ class CareerOrchestrator:
                     result.get("time", 0),
                 )
             )
+            context.trace.append(
+
+                self.trace.create(
+
+        agent=agent_name,
+
+        provider=settings.LLM_PROVIDER,
+
+        success=result["success"],
+
+        execution_time=result.get("time", 0),
+
+        retries=0,
+
+        )
+
+        )
+            
 
             context.timings[agent_name] = result.get(
                 "time",

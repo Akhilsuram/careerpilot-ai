@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+
 import {
   LayoutDashboard,
   FileText,
@@ -16,8 +17,8 @@ import {
   Cpu,
   Database,
   Bot,
+  Sparkles,
 } from "lucide-react";
-
 const menu = [
   {
     name: "Dashboard",
@@ -30,9 +31,14 @@ const menu = [
     icon: FileText,
   },
   {
-    name: "ATS Score",
+    name: "ATS Analysis",
     href: "/ats",
     icon: BarChart3,
+  },
+  {
+    name: "Resume Optimizer",
+    href: "/resume-optimizer",
+    icon: Sparkles,
   },
   {
     name: "Jobs",

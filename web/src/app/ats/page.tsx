@@ -1,24 +1,38 @@
+"use client";
+
+import { useState } from "react";
+
 import MainLayout from "@/components/layout/MainLayout";
 
-import ATSOverview from "@/components/ats/ATSOverview";
-import ATSBreakdown from "@/components/ats/ATSBreakdown";
-import ATSSuggestions from "@/components/ats/ATSSuggestions";
-import ATSHistory from "@/components/ats/ATSHistory";
+import ATSInput from "@/components/ats/ATSInput";
+import ATSResult from "@/components/ats/ATSResult";
 
 export default function ATSPage() {
+
+  const [result, setResult] = useState<any>(null);
+
   return (
+
     <MainLayout>
+
       <div className="space-y-8">
 
-        <ATSOverview />
+        <ATSInput
+          onComplete={setResult}
+        />
 
-        <ATSBreakdown />
+        {result && (
 
-        <ATSSuggestions />
+          <ATSResult
+            result={result}
+          />
 
-        <ATSHistory />
+        )}
 
       </div>
+
     </MainLayout>
+
   );
+
 }

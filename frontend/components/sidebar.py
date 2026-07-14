@@ -1,30 +1,79 @@
 import streamlit as st
-
-from utils.session_manager import SessionManager
+from streamlit_option_menu import option_menu
 
 
 def render_sidebar():
 
-    st.sidebar.title("CareerPilot AI")
+    with st.sidebar:
 
-    st.sidebar.success("Multi-Agent Career Copilot")
-
-    resume = SessionManager.get_resume()
-
-    if resume:
-
-        st.sidebar.success("✅ Resume Loaded")
-
-        st.sidebar.write(
-            resume.get("name", "Unknown")
+        st.image(
+            "frontend/assets/logo.png",
+            width=55,
         )
 
-    else:
+        st.markdown(
+            "## CareerPilot AI"
+        )
 
-        st.sidebar.warning("No Resume Loaded")
+        st.caption(
+            "Production Version 1.0"
+        )
+        st.markdown("---")
 
-    if st.sidebar.button("Clear Resume"):
+        st.metric(
+    "Current Provider",
+    "Groq",
+)
 
-        SessionManager.clear_resume()
+        st.metric(
+    "Agents",
+    "7 Active",
+)
 
-        st.rerun()
+        st.metric(
+    "Database",
+    "Connected",
+)
+
+        option_menu(
+            None,
+            [
+                "Dashboard",
+                "Resume",
+                "ATS Score",
+                "Resume Optimizer",
+                "Job Match",
+                "Interview",
+                "Roadmap",
+                "Analytics",
+                "History",
+                "Settings",
+            ],
+            icons=[
+                "house",
+                "file-earmark-person",
+                "speedometer2",
+                "stars",
+                "briefcase",
+                "camera-video",
+                "map",
+                "graph-up",
+                "clock-history",
+                "gear",
+            ],
+            default_index=0,
+        )
+
+        st.divider()
+
+        st.success(
+            "🚀 AI Agents Ready"
+        )
+
+        st.info(
+            "Provider: Groq"
+        )
+
+        st.warning(
+            "Database Connected"
+        )

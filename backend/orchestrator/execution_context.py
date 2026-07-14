@@ -15,3 +15,5 @@ class ExecutionContext:
     execution_log: list = field(default_factory=list)
 
     timings: dict = field(default_factory=dict)
+
+    trace: list = field(default_factory=list)

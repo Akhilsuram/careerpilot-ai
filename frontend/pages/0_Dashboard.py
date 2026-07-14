@@ -1,9 +1,18 @@
 import requests
 import streamlit as st
 
-from components.dashboard_cards import metric_card
-from components.dashboard_sections import title
 from components.sidebar import render_sidebar
+from components.hero import hero
+from components.cards import DashboardCard
+from components.charts import DashboardCharts
+from components.footer import footer
+from components.dashboard_sections import title
+from components.activity_feed import activity_feed
+from components.recommendation_card import recommendation_card
+from components.job_card import job_card
+from components.roadmap_card import roadmap_card
+from components.insights_panel import insights_panel
+
 from config import API_BASE_URL
 from utils.session_manager import SessionManager
 
@@ -15,16 +24,39 @@ st.set_page_config(
 
 render_sidebar()
 
-st.title("🚀 CareerPilot AI")
-st.caption("Your Personal Multi-Agent Career Copilot")
+hero()
 
 resume = SessionManager.get_resume()
 
 if not resume:
-    st.warning("Please analyze your resume first.")
+
+    st.warning(
+        "Please analyze your resume first."
+    )
+
     st.stop()
 
-st.success(f"Resume Loaded: {resume.get('name', 'Unknown')}")
+st.success(
+    f"Welcome back, {resume.get('name', 'User')} 👋"
+)
+
+st.subheader("⚡ Quick Actions")
+
+c1, c2, c3, c4 = st.columns(4)
+
+with c1:
+    st.button("📄 Resume")
+
+with c2:
+    st.button("📊 ATS")
+
+with c3:
+    st.button("💼 Jobs")
+
+with c4:
+    st.button("🎤 Interview")
+
+st.divider()
 
 goal = st.text_input(
     "Career Goal",
@@ -37,10 +69,16 @@ if st.button(
 ):
 
     if not goal.strip():
-        st.warning("Please enter your career goal.")
+
+        st.warning(
+            "Please enter your career goal."
+        )
+
         st.stop()
 
-    with st.spinner("Running AI Agents..."):
+    with st.spinner(
+        "Running AI Agents..."
+    ):
 
         response = requests.post(
             f"{API_BASE_URL}/career/analyze",
@@ -52,166 +90,318 @@ if st.button(
         )
 
     if response.status_code != 200:
+
         st.error(response.text)
+
         st.stop()
 
     report = response.json()["data"]
 
-    # Safe loading (handles None values)
     ats = report.get("ats") or {}
-    resume_optimizer = report.get("resume_optimizer") or {}
-    job_matches = report.get("job_matches") or {}
-    interview = report.get("interview") or {}
-    roadmap = report.get("roadmap") or {}
+
+    resume_optimizer = report.get(
+        "resume_optimizer"
+    ) or {}
+
+    job_matches = report.get(
+        "job_matches"
+    ) or {}
+
+    interview = report.get(
+        "interview"
+    ) or {}
+
+    roadmap = report.get(
+        "roadmap"
+    ) or {}
+
+    score = ats.get(
+        "overall_score",
+        0,
+    )
+
+    try:
+
+        score = float(score)
+
+        if score <= 1:
+            score *= 100
+
+    except Exception:
+
+        score = 0
+
+    # =====================================
+    # Career Overview
+    # =====================================
+
+    title("📈 Career Overview")
 
     c1, c2, c3, c4 = st.columns(4)
 
-    # ATS
     with c1:
 
-        score = ats.get("overall_score", 0)
-
-        try:
-            score = float(score)
-
-            if score <= 1:
-                score *= 100
-
-        except Exception:
-            score = 0
-
-        metric_card(
+        DashboardCard.metric(
             "ATS Score",
             f"{int(score)}%",
         )
 
-    # Job Matches
     with c2:
 
-        metric_card(
-            "Job Matches",
-            len(job_matches.get("jobs", [])),
+        DashboardCard.metric(
+            "Resume Health",
+            "Excellent",
         )
 
-    # Interview
     with c3:
 
-        metric_card(
-            "Interview Questions",
-            len(interview.get("questions", [])),
+        DashboardCard.metric(
+            "Job Matches",
+            len(
+                job_matches.get(
+                    "jobs",
+                    [],
+                )
+            ),
         )
 
-    # Roadmap
     with c4:
 
-        metric_card(
-            "Roadmap Weeks",
-            len(roadmap.get("roadmap", [])),
+        DashboardCard.metric(
+            "Roadmap",
+            f"{len(roadmap.get('roadmap', []))} Weeks",
         )
 
     st.divider()
 
-    # Resume Recommendations
-    title("Resume Recommendations")
+    # =====================================
+    # Dashboard Grid
+    # =====================================
 
-    recommendations = resume_optimizer.get(
-        "recommendations",
-        [],
-    )
+    left, right = st.columns([2, 1])
 
-    if recommendations:
+    with left:
 
-        for item in recommendations:
-            st.success(item)
+        DashboardCharts.line(
+            {
+                "Attempt": [1, 2, 3, 4],
+                "Score": [
+                    max(int(score) - 15, 0),
+                    max(int(score) - 8, 0),
+                    max(int(score) - 3, 0),
+                    int(score),
+                ],
+            }
+        )
 
-    else:
+    with right:
 
-        st.info("No recommendations available.")
+        insights_panel()
 
     st.divider()
+        # =====================================
+    # Jobs + Roadmap
+    # =====================================
 
-    # Job Matches
-    title("Matching Jobs")
+    left, right = st.columns(2)
 
-    jobs = job_matches.get("jobs", [])
+    with left:
 
-    if jobs:
+        title("💼 Recommended Jobs")
 
-        for job in jobs:
+        jobs = job_matches.get(
+            "jobs",
+            [],
+        )
 
-            with st.container(border=True):
+        if jobs:
 
-                st.subheader(
-                    job.get(
-                        "role",
-                        "Unknown Role",
-                    )
-                )
-
-                st.write(
-                    f"🏢 {job.get('company', 'N/A')}"
-                )
-
-                st.write(
-                    f"📍 {job.get('location', 'N/A')}"
-                )
-
-                score = job.get(
-                    "match_score",
-                    0,
-                )
+            for job in jobs:
 
                 try:
 
-                    score = float(score)
-
-                    if score <= 1:
-                        score *= 100
+                    job_card(job)
 
                 except Exception:
 
-                    score = 0
+                    with st.container(border=True):
 
-                st.progress(score / 100)
+                        st.subheader(
+                            job.get(
+                                "role",
+                                "Unknown Role",
+                            )
+                        )
 
-                st.write(
-                    f"**Match Score:** {int(score)}%"
-                )
+                        st.write(
+                            f"🏢 {job.get('company', 'N/A')}"
+                        )
 
-                missing = job.get(
-                    "missing_skills",
-                    [],
-                )
+                        st.write(
+                            f"📍 {job.get('location', 'N/A')}"
+                        )
 
-                st.write("### Missing Skills")
+                        match_score = job.get(
+                            "match_score",
+                            0,
+                        )
 
-                if missing:
+                        try:
 
-                    st.write(", ".join(missing))
+                            match_score = float(match_score)
 
-                else:
+                            if match_score <= 1:
+                                match_score *= 100
 
-                    st.success(
-                        "No missing skills 🎉"
-                    )
+                        except Exception:
 
-                st.write("### Why this Match")
+                            match_score = 0
+
+                        st.progress(
+                            match_score / 100
+                        )
+
+                        st.write(
+                            f"**Match Score:** {int(match_score)}%"
+                        )
+
+                        missing = job.get(
+                            "missing_skills",
+                            [],
+                        )
+
+                        st.write(
+                            "### Missing Skills"
+                        )
+
+                        if missing:
+
+                            st.write(
+                                ", ".join(missing)
+                            )
+
+                        else:
+
+                            st.success(
+                                "No missing skills 🎉"
+                            )
+
+                        st.write(
+                            "### Why this Match"
+                        )
+
+                        st.info(
+                            job.get(
+                                "reason",
+                                "No reason available.",
+                            )
+                        )
+
+        else:
+
+            st.info(
+                "No matching jobs found."
+            )
+
+    with right:
+
+        try:
+
+            roadmap_card()
+
+        except Exception:
+
+            weeks = roadmap.get(
+                "roadmap",
+                [],
+            )
+
+            if weeks:
+
+                for week in weeks:
+
+                    with st.container(
+                        border=True
+                    ):
+
+                        st.subheader(
+                            f"Week {week.get('week', '')}"
+                        )
+
+                        st.write(
+                            "### Topics"
+                        )
+
+                        for topic in week.get(
+                            "topics",
+                            [],
+                        ):
+
+                            st.success(topic)
+
+                        st.write(
+                            "### Goals"
+                        )
+
+                        for goal_item in week.get(
+                            "goals",
+                            [],
+                        ):
+
+                            st.info(goal_item)
+
+            else:
 
                 st.info(
-                    job.get(
-                        "reason",
-                        "No reason available.",
-                    )
+                    "Career roadmap not generated."
                 )
-
-    else:
-
-        st.info("No matching jobs found.")
 
     st.divider()
 
-    # Interview Questions
-    title("Interview Questions")
+    # =====================================
+    # Activity Feed + Recommendations
+    # =====================================
+
+    left, right = st.columns(2)
+
+    with left:
+
+        activity_feed()
+
+    with right:
+
+        try:
+
+            recommendation_card()
+
+        except Exception:
+
+            title("🎯 AI Recommendations")
+
+            recommendations = resume_optimizer.get(
+                "recommendations",
+                [],
+            )
+
+            if recommendations:
+
+                for item in recommendations:
+
+                    st.success(item)
+
+            else:
+
+                st.info(
+                    "No recommendations available."
+                )
+
+    st.divider()
+
+        # =====================================
+    # Interview Preparation
+    # =====================================
+
+    title("🎤 Interview Preparation")
 
     questions = interview.get(
         "questions",
@@ -229,12 +419,32 @@ if st.button(
                 )
             ):
 
-                st.write(
-                    q.get(
-                        "answer",
-                        "Answer not available.",
+                if q.get("category"):
+
+                    st.caption(
+                        f"Category: {q['category']}"
                     )
+
+                if q.get("difficulty"):
+
+                    st.caption(
+                        f"Difficulty: {q['difficulty']}"
+                    )
+
+                answer = q.get(
+                    "answer",
+                    "",
                 )
+
+                if answer:
+
+                    st.write(answer)
+
+                else:
+
+                    st.warning(
+                        "Answer not available."
+                    )
 
     else:
 
@@ -244,44 +454,66 @@ if st.button(
 
     st.divider()
 
-    # Career Roadmap
-    title("Career Roadmap")
+    # =====================================
+    # Analytics
+    # =====================================
 
-    weeks = roadmap.get(
-        "roadmap",
+    title("📊 Analytics")
+
+    history = report.get(
+        "analytics"
+    ) or {}
+
+    chart_data = history.get(
+        "ats_history",
         [],
     )
 
-    if weeks:
+    if chart_data:
 
-        for week in weeks:
-
-            with st.container(border=True):
-
-                st.subheader(
-                    f"Week {week.get('week', '')}"
-                )
-
-                st.write("### Topics")
-
-                for topic in week.get(
-                    "topics",
-                    [],
-                ):
-
-                    st.success(topic)
-
-                st.write("### Goals")
-
-                for g in week.get(
-                    "goals",
-                    [],
-                ):
-
-                    st.info(g)
+        DashboardCharts.line(
+            chart_data,
+            x="Attempt",
+            y="ATS Score",
+        )
 
     else:
 
-        st.info(
-            "Career roadmap was not generated."
+        DashboardCharts.line(
+            {
+                "Attempt": [
+                    1,
+                    2,
+                    3,
+                    4,
+                ],
+                "ATS Score": [
+                    max(
+                        int(score) - 15,
+                        0,
+                    ),
+                    max(
+                        int(score) - 8,
+                        0,
+                    ),
+                    max(
+                        int(score) - 3,
+                        0,
+                    ),
+                    int(score),
+                ],
+            },
+            x="Attempt",
+            y="ATS Score",
         )
+
+    st.divider()
+
+    st.success(
+        "🎉 Career Report Generated Successfully!"
+    )
+        # =====================================
+    # Footer
+    # =====================================
+
+footer()

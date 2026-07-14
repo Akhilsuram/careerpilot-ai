@@ -1,14 +1,14 @@
 import api from "./api";
 
-export async function analyzeATS(
+export async function optimizeResume(
   resumeData: any,
-  jobDescription: string
+  targetRole: string
 ) {
   const response = await api.post(
-    "/ats/analyze",
+    "/resume-optimizer/optimize",
     {
       resume_data: resumeData,
-      job_description: jobDescription,
+      target_role: targetRole,
     }
   );
 
