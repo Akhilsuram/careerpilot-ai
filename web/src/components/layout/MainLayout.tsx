@@ -7,14 +7,22 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen bg-slate-100">
+    <div className="flex bg-slate-100">
+
       <Sidebar />
 
-      <main className="ml-72 flex-1">
+      <div className="ml-72 flex min-h-screen flex-1 flex-col">
+
         <Header />
 
-        <div className="p-8">{children}</div>
-      </main>
+        <main className="flex-1 p-8">
+
+          {children}
+
+        </main>
+
+      </div>
+
     </div>
   );
 }

@@ -1,15 +1,16 @@
 import MainLayout from "@/components/layout/MainLayout";
+import Hero from "@/components/dashboard/Hero";
+import DashboardStats from "@/components/dashboard/DashboardStats";
+import DashboardGrid from "@/components/dashboard/DashboardGrid";
 
-export default function Dashboard() {
+export default function DashboardPage() {
   return (
     <MainLayout>
-      <h1 className="text-4xl font-bold">
-        Dashboard
-      </h1>
-
-      <p className="mt-2 text-gray-500">
-        Welcome to CareerPilot AI.
-      </p>
+      <div className="space-y-8">
+        <Hero />
+        <DashboardStats />
+        <DashboardGrid />
+      </div>
     </MainLayout>
   );
 }
