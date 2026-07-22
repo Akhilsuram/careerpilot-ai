@@ -6,13 +6,11 @@ from sqlalchemy.orm import sessionmaker
 from backend.core.settings import settings
 
 # Create database directory if it doesn't exist
-db_dir = Path("storage/database")
-db_dir.mkdir(parents=True, exist_ok=True)
-
 Path("storage/database").mkdir(
     parents=True,
-    exist_ok=True
+    exist_ok=True,
 )
+
 engine = create_engine(
     settings.DATABASE_URL,
     echo=False,
