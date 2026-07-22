@@ -3,7 +3,7 @@ import time
 from backend.memory.memory_manager import MemoryManager
 from backend.orchestrator.career_orchestrator import CareerOrchestrator
 from backend.utils.response_builder import ResponseBuilder
-
+from backend.repositories.dashboard_repository import DashboardRepository
 
 class OrchestratorService:
 
@@ -12,6 +12,8 @@ class OrchestratorService:
         self.orchestrator = CareerOrchestrator()
 
         self.memory = MemoryManager()
+
+        self.dashboard = DashboardRepository()
 
     def execute(
         self,
@@ -56,6 +58,9 @@ class OrchestratorService:
                 self.memory.save_ats_score(
                     resume_id=1,
                     score=score,
+                )
+                self.dashboard.update_ats_score(
+                    int(round(score))
                 )
 
             except Exception:

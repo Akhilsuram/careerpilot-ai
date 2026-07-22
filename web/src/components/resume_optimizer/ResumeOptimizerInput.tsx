@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import toast from "react-hot-toast";
 import PrimaryButton from "@/components/common/PrimaryButton";
 import { optimizeResume } from "@/services/resumeOptimizer";
 
@@ -18,7 +19,7 @@ export default function ResumeOptimizerInput({
     const stored = localStorage.getItem("careerpilot_resume");
 
     if (!stored) {
-      alert("Upload resume first.");
+      toast.error("Upload resume first.");
       return;
     }
 
@@ -36,6 +37,9 @@ export default function ResumeOptimizerInput({
         resume.data,
         role
       );
+      console.log("========== RESPONSE ==========");
+      console.log(result);
+      console.log(result.data);
 
       onComplete(result.data);
     } finally {

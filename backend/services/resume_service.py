@@ -18,13 +18,20 @@ class ResumeService:
         start = time.time()
 
         PDFParser.validate(file_path)
+        print("STEP 1 - PDF validated")
 
         text = PDFParser.extract_text(file_path)
+        print("STEP 2 - Text extracted")
+        print("\n========== EXTRACTED TEXT ==========")
+        print(text[:3000])
+        print("====================================")
 
         content_hash = PDFParser.generate_hash(file_path)
+        print("STEP 3 - Hash generated")
 
         # Check if resume already exists
         existing_resume = self.repository.get_by_hash(content_hash)
+        print("STEP 4 - Checking existing resume")
 
         if existing_resume:
 
@@ -44,7 +51,18 @@ class ResumeService:
             )
 
         # Analyze Resume
-        parsed = self.agent.analyze(text)
+        try:
+            parsed = self.agent.analyze(text)
+            print("STEP 5 - Calling ResumeAgent")
+            print(">>> ResumeAgent.analyze() completed")
+            print(">>> Calling ResumeAgent.analyze()")
+            print("STEP 6 - ResumeAgent completed")
+
+        except Exception as e:
+
+            return ResponseBuilder.error(
+                message=f"Resume analysis failed: {str(e)}"
+            )
 
         # Create Resume object
         resume = Resume(
@@ -59,8 +77,11 @@ class ResumeService:
 
         # Save to database
         resume = self.repository.create(resume)
+        print("STEP 7 - Saving to database")
+        
 
         processing_time = round(time.time() - start, 2)
+        print("STEP 8 - Finished")
 
         result = {
             "resume": resume,

@@ -21,6 +21,8 @@ from backend.api.v1.resume_optimizer import (
 )
 
 from fastapi.middleware.cors import CORSMiddleware
+from backend.api.v1 import career_copilot
+
 
 app = FastAPI(
     title="CareerPilot AI",
@@ -55,3 +57,4 @@ app.include_router(analytics_router)
 app.include_router(
     analytics_history_router
 )
+app.include_router(career_copilot.router)

@@ -1,47 +1,34 @@
+import Card from "@/components/ui/Card";
+import PageHeader from "@/components/ui/PageHeader";
+
 import QuestionCard from "./QuestionCard";
 
-interface Props{
-
-    questions:any[];
-
+interface Props {
+  questions: any[];
 }
 
 export default function InterviewQuestions({
+  questions,
+}: Props) {
+  return (
+    <Card>
 
-    questions
+      <PageHeader
+        title="Interview Questions"
+        subtitle={`${questions.length} AI-generated interview questions`}
+      />
 
-}:Props){
+      <div className="mt-8 space-y-6">
 
-    if(!Array.isArray(questions))
+        {questions.map((question, index) => (
+          <QuestionCard
+            key={index}
+            question={question}
+          />
+        ))}
 
-        return null;
+      </div>
 
-    return(
-
-        <div className="space-y-6">
-
-            {
-
-                questions.map(
-
-                    (q,index)=>(
-
-                        <QuestionCard
-
-                            key={index}
-
-                            question={q}
-
-                        />
-
-                    )
-
-                )
-
-            }
-
-        </div>
-
-    );
-
+    </Card>
+  );
 }

@@ -2,8 +2,13 @@
 
 import { useRef, useState } from "react";
 import { Upload } from "lucide-react";
+import toast from "react-hot-toast";
 
 import { analyzeResume } from "@/services/resume";
+
+import Card from "@/components/ui/Card";
+import Button from "@/components/ui/Button";
+import PageHeader from "@/components/ui/PageHeader";
 
 export default function ResumeUploader() {
 
@@ -17,27 +22,29 @@ export default function ResumeUploader() {
 
       setLoading(true);
 
-    const result = await analyzeResume(file);
+      const result = await analyzeResume(file);
 
-    // Save the complete backend response
-    localStorage.setItem(
-    "careerpilot_resume",
-    JSON.stringify(result)
-    );
+      localStorage.setItem(
+        "careerpilot_resume",
+        JSON.stringify(result)
+      );
 
-    console.log(result);
+      console.log(result);
 
-    alert("Resume analyzed successfully.");
+      toast.success("Resume analyzed successfully.");
 
-    window.dispatchEvent(
-    new Event("resume-updated")
-    );
+      window.dispatchEvent(
+        new Event("resume-updated")
+      );
 
-    } catch (err) {
+    } catch (err: any) {
 
       console.error(err);
 
-      alert("Resume upload failed.");
+      toast.error(
+        err.response?.data?.detail ??
+        "Resume upload failed. Please try again."
+      );
 
     } finally {
 
@@ -49,18 +56,30 @@ export default function ResumeUploader() {
 
   return (
 
-    <div className="rounded-3xl bg-white p-8 shadow-md">
+    <Card>
 
-      <h1 className="text-3xl font-bold">
-        Resume Analysis
-      </h1>
-
-      <p className="mt-2 text-gray-500">
-        Upload your latest resume.
-      </p>
+      <PageHeader
+        title="Resume Analysis"
+        subtitle="Upload your latest resume and let CareerPilot AI analyze it."
+      />
 
       <div
-        className="mt-8 rounded-2xl border-2 border-dashed border-indigo-300 bg-indigo-50 p-12 text-center"
+        className="
+        mt-8
+        rounded-3xl
+        border-2
+        border-dashed
+        border-indigo-300
+        bg-gradient-to-br
+        from-indigo-50
+        to-cyan-50
+        p-12
+        text-center
+        transition-all
+        duration-300
+        hover:border-indigo-500
+        hover:shadow-lg
+        "
       >
 
         <Upload
@@ -69,57 +88,53 @@ export default function ResumeUploader() {
         />
 
         <h2 className="mt-6 text-2xl font-semibold">
-
           Drag & Drop Resume
-
         </h2>
 
         <p className="mt-3 text-gray-500">
-
-          PDF • DOCX
-
+          PDF Resume (DOCX support coming soon)
         </p>
 
-        <button
+        <div className="mt-8 flex justify-center">
 
-          onClick={() => inputRef.current?.click()}
+          <Button
+            loading={loading}
+            onClick={() => inputRef.current?.click()}
+          >
+            Choose Resume
+          </Button>
 
-          disabled={loading}
-
-          className="mt-8 rounded-xl bg-indigo-600 px-8 py-3 text-white"
-
-        >
-
-          {loading
-            ? "Analyzing..."
-            : "Choose Resume"}
-
-        </button>
+        </div>
 
         <input
-
           ref={inputRef}
-
           hidden
-
           type="file"
-
           accept=".pdf"
-
           onChange={(e) => {
 
             const file = e.target.files?.[0];
 
-            if (file)
-              upload(file);
+            if (!file) return;
+
+            if (file.type !== "application/pdf") {
+              toast.error("Please select a PDF file.");
+              return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+              toast.error("Resume must be smaller than 5 MB.");
+              return;
+            }
+
+            upload(file);
 
           }}
-
         />
 
       </div>
 
-    </div>
+    </Card>
 
   );
 

@@ -1,115 +1,101 @@
 "use client";
 
 import { useState } from "react";
+import { Route } from "lucide-react";
+import toast from "react-hot-toast";
 
-import PrimaryButton from "@/components/common/PrimaryButton";
+import Card from "@/components/ui/Card";
+import PageHeader from "@/components/ui/PageHeader";
+import Button from "@/components/ui/Button";
 
 import { generateRoadmap } from "@/services/roadmap";
 
-interface Props{
-    onComplete:(roadmap:any[])=>void;
+interface Props {
+  onComplete: (roadmap: any[]) => void;
 }
 
-export default function RoadmapForm({
-    onComplete,
-}:Props){
+export default function RoadmapForm({ onComplete }: Props) {
+  const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    const [role,setRole]=useState("");
-    const [loading,setLoading]=useState(false);
+  async function run() {
+    const stored = localStorage.getItem("careerpilot_resume");
 
-    async function run(){
-
-        const stored=localStorage.getItem(
-            "careerpilot_resume"
-        );
-
-        if(!stored){
-
-            alert("Upload resume first.");
-            return;
-
-        }
-
-        if(!role.trim()){
-
-            alert("Enter target role.");
-            return;
-
-        }
-
-        const resume=JSON.parse(stored);
-
-        setLoading(true);
-
-        try{
-
-            const result=await generateRoadmap(
-                resume.data,
-                role
-            );
-
-            onComplete(result.data.roadmap);
-
-        }finally{
-
-            setLoading(false);
-
-        }
-
+    if (!stored) {
+      toast.error("Upload resume first.");
+      return;
     }
 
-    return(
+    if (!role.trim()) {
+      toast.error("Enter a target role.");
+      return;
+    }
 
-        <div className="rounded-3xl bg-white p-8 shadow">
+    const resume = JSON.parse(stored);
 
-            <h1 className="text-3xl font-bold">
+    setLoading(true);
 
-                AI Career Roadmap
+    try {
+      const result = await generateRoadmap(
+        resume.data,
+        role
+      );
 
-            </h1>
+      console.log("Roadmap API Response:", result);
+      console.log("Roadmap Data:", result.data);
+      console.log("Roadmap Array:", result.data?.roadmap);
 
-            <input
+      if (!result.success) {
+        toast.error(result.message || "Failed to generate roadmap.");
+        return;
+      }
 
-                className="mt-6 w-full rounded-xl border p-4"
+      onComplete(result.data.roadmap);
 
-                placeholder="Target Role"
+      toast.success("Roadmap generated successfully!");
+    } catch (error) {
+      console.error("Roadmap Error:", error);
+      toast.error("Failed to generate roadmap.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
-                value={role}
+  return (
+    <Card>
+      <PageHeader
+        title="Career Roadmap"
+        subtitle="Generate a personalized learning roadmap."
+      />
 
-                onChange={(e)=>setRole(e.target.value)}
+      <div className="mt-8 rounded-3xl border-2 border-dashed border-indigo-300 bg-gradient-to-br from-indigo-50 to-cyan-50 p-8">
+        <div className="mb-6 flex items-center gap-3">
+          <Route
+            size={28}
+            className="text-indigo-600"
+          />
 
-            />
-
-            <div className="mt-6">
-
-                <PrimaryButton
-
-                    onClick={run}
-
-                    disabled={loading}
-
-                >
-
-                    {
-
-                        loading
-
-                        ?
-
-                        "Generating..."
-
-                        :
-
-                        "Generate Roadmap"
-
-                    }
-
-                </PrimaryButton>
-
-            </div>
-
+          <h2 className="text-xl font-semibold">
+            Target Role
+          </h2>
         </div>
 
-    );
+        <input
+          className="w-full rounded-2xl border border-slate-200 p-4 outline-none focus:border-indigo-500"
+          placeholder="AI Engineer"
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+        />
 
+        <div className="mt-8">
+          <Button
+            loading={loading}
+            onClick={run}
+          >
+            Generate Roadmap
+          </Button>
+        </div>
+      </div>
+    </Card>
+  );
 }

@@ -3,7 +3,9 @@ from backend.agents.interview_agent import InterviewAgent
 from backend.agents.job_match_agent import JobMatchAgent
 from backend.agents.resume_optimizer_agent import ResumeOptimizerAgent
 from backend.agents.roadmap_agent import RoadmapAgent
-
+from backend.agents.final_report_agent import FinalReportAgent
+from backend.agents.skill_gap_agent import SkillGapAgent
+from backend.agents.learning_resource_agent import LearningResourceAgent
 
 class AgentRegistry:
 
@@ -15,6 +17,9 @@ class AgentRegistry:
             "job_match": JobMatchAgent(),
             "interview": InterviewAgent(),
             "roadmap": RoadmapAgent(),
+            "final_report": FinalReportAgent(),
+            "skill_gap": SkillGapAgent(),
+            "learning_resources": LearningResourceAgent(),
         }
 
     def get(

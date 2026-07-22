@@ -3,12 +3,13 @@ import time
 from backend.agents.job_match_agent import JobMatchAgent
 from backend.tools.job_matcher import JobMatcher
 from backend.utils.response_builder import ResponseBuilder
-
+from backend.repositories.dashboard_repository import DashboardRepository
 
 class JobMatchService:
 
     def __init__(self):
         self.agent = JobMatchAgent()
+        self.dashboard = DashboardRepository()
 
     def execute(
         self,
@@ -29,6 +30,9 @@ class JobMatchService:
             target_role,
             location,
         )
+        jobs = result.get("jobs", [])
+
+        self.dashboard.update_job_matches(len(jobs))
 
         processing_time = round(
             time.time() - start,

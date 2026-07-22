@@ -2,13 +2,14 @@ import time
 from backend.utils.response_builder import ResponseBuilder
 from backend.agents.resume_optimizer_agent import ResumeOptimizerAgent
 from backend.tools.resume_formatter import ResumeFormatter
-
+from backend.repositories.dashboard_repository import DashboardRepository
 
 class ResumeOptimizerService:
 
     def __init__(self):
 
         self.agent = ResumeOptimizerAgent()
+        self.dashboard = DashboardRepository()
 
     def execute(
         self,
@@ -26,6 +27,10 @@ class ResumeOptimizerService:
             resume_data,
             target_role,
         )
+        score = result.get("resume_score", 0)
+
+        if isinstance(score, (int, float)):
+            self.dashboard.update_resume_score(int(score))
 
         processing_time = round(
             time.time() - start,

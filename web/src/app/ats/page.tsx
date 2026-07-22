@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import MainLayout from "@/components/layout/MainLayout";
+import PageLoader from "@/components/shared/PageLoader";
 
 import ATSInput from "@/components/ats/ATSInput";
 import ATSResult from "@/components/ats/ATSResult";

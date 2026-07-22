@@ -27,7 +27,7 @@ class JobMatchAgent(BaseAgent):
         prompt = f"""
 You are an AI Job Matching Agent.
 
-Based on the resume below, recommend the best 5 jobs.
+Based on the resume below, recommend the best min 7 and max 10 jobs.
 
 Role:
 {target_role}

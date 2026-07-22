@@ -1,38 +1,60 @@
-"use client";
+import Card from "@/components/ui/Card";
 
-import {
-  LineChart,
-  Line,
-  XAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+type Props = {
+  data?: any[];
+};
 
-import { atsHistory } from "@/lib/dashboard-data";
-
-export default function ATSChart() {
+export default function ATSChart({
+  data = [],
+}: Props) {
   return (
-    <div className="rounded-2xl bg-white p-6 shadow-md">
+    <Card className="h-[370px] flex flex-col">
 
-      <h2 className="mb-6 text-xl font-semibold">
-        ATS Score Trend
+      <h2 className="mb-6 text-2xl font-bold">
+        ATS Score History
       </h2>
 
-      <ResponsiveContainer
-        width="100%"
-        height={300}
-      >
-        <LineChart data={atsHistory}>
-          <XAxis dataKey="month" />
-          <Tooltip />
-          <Line
-            dataKey="score"
-            stroke="#4F46E5"
-            strokeWidth={4}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+      {data.length === 0 ? (
 
-    </div>
+        <p className="text-gray-500">
+          No ATS history available yet.
+        </p>
+
+      ) : (
+
+        <div className="space-y-4 overflow-y-auto flex-1 pr-2">
+
+          {[...data].reverse().map((item) => (
+
+            <div
+              key={item.id}
+              className="flex items-center justify-between rounded-2xl border p-4"
+            >
+
+              <div>
+
+                <p className="font-medium">
+                  ATS Analysis
+                </p>
+
+                <p className="text-sm text-gray-500">
+                  {new Date(item.created_at).toLocaleString()}
+                </p>
+
+              </div>
+
+              <span className="text-lg font-bold text-indigo-600">
+                {Math.round(item.score)}%
+              </span>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      )}
+
+    </Card>
   );
 }

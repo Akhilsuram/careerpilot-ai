@@ -1,8 +1,10 @@
 import json
+
 from backend.utils.json_parser import JSONParser
 from backend.providers.provider_manager import ProviderManager
 from backend.agents.base_agent import BaseAgent
 from backend.orchestrator.agent_metadata import AgentMetadata
+
 
 class InterviewAgent(BaseAgent):
 
@@ -26,44 +28,62 @@ class InterviewAgent(BaseAgent):
         prompt = f"""
 You are an expert Technical Interviewer.
 
-Generate exactly 15 interview questions.
+Your task is to generate EXACTLY 15 interview questions based on the candidate's resume and target role.
 
-For EACH question provide:
-
-1. category
-2. difficulty
-3. interview question
-4. a detailed model answer (150–250 words)
-
-The answer should be interview-ready and technically accurate.
-
-Mix questions from:
+Generate a balanced mix of questions from these categories:
 
 - HR
+- Behavioral
 - Projects
 - Python
 - SQL
 - Machine Learning
-- Behavioral
 - DSA
 
-Return ONLY valid JSON.
+For EACH question provide:
 
-Do NOT include markdown.
-Do NOT include ```json.
-Do NOT leave the answer field empty.
+1. category
+2. difficulty (Easy, Medium, Hard)
+3. question
+4. answer
 
-Return JSON in exactly this format:
+Rules:
+
+- Generate EXACTLY 15 questions.
+- Answers must be between 80 and 150 words.
+- Answers should be technically accurate and interview-ready.
+- Do NOT repeat questions.
+- Keep answers concise.
+- If SQL is required, write it as plain text.
+- NEVER use Markdown.
+- NEVER use bullet points.
+- NEVER use headings.
+- NEVER use code blocks.
+- NEVER use ```json
+- NEVER use ```sql
+- NEVER use triple backticks.
+- NEVER wrap anything inside markdown.
+- Escape all quotation marks inside strings.
+- Escape all newline characters using \\n.
+- Output ONLY a valid JSON object.
+- The first character of the response MUST be {{
+- The last character of the response MUST be }}
+- Do not write any explanation before or after the JSON.
+- Do not include words like "Here is the JSON".
+- Do not include notes.
+- Do not include comments.
+
+Return ONLY this JSON structure:
 
 {{
-  "questions": [
-    {{
-      "category": "",
-      "difficulty": "",
-      "question": "",
-      "answer": "A detailed interview-ready answer."
-    }}
-  ]
+    "questions": [
+        {{
+            "category": "Python",
+            "difficulty": "Easy",
+            "question": "Question here",
+            "answer": "Answer here"
+        }}
+    ]
 }}
 
 Resume:
@@ -82,10 +102,8 @@ Job Description:
         response = self.provider.generate(prompt)
 
         return JSONParser.parse(response)
-    def execute(
-        self,
-        context,
-    ):
+
+    def execute(self, context):
 
         role = context.planner_output.get(
             "target_role",

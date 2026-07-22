@@ -1,6 +1,7 @@
 from datetime import datetime
 from pathlib import Path
-
+import traceback
+from backend.utils.resume_normalizer import ResumeNormalizer
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from sqlalchemy.orm import Session
 
@@ -23,6 +24,30 @@ async def analyze_resume(
     file: UploadFile = File(...),
     db: Session = Depends(get_db),
 ):
+    # Only PDF files
+    if file.content_type != "application/pdf":
+        raise HTTPException(
+            status_code=400,
+            detail="Please upload a PDF resume only."
+        )
+
+    # File name validation
+    if not file.filename.lower().endswith(".pdf"):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid file format. Only PDF files are supported."
+        )
+
+    # Maximum size (5 MB)
+    contents = await file.read()
+
+    if len(contents) > 5 * 1024 * 1024:
+        raise HTTPException(
+            status_code=400,
+            detail="Resume size must be less than 5 MB."
+        )
+
+    await file.seek(0)
     try:
 
         upload_dir = Path("storage/uploads")
@@ -40,6 +65,7 @@ async def analyze_resume(
         result = response["data"]
 
         parsed = result["parsed"]
+        parsed = ResumeNormalizer.normalize(parsed)
 
         resume = result["resume"]
 
@@ -55,8 +81,16 @@ async def analyze_resume(
             data=ResumeData(**parsed),
         )
 
-    except Exception as e:
+    except HTTPException:
+        raise
+
+    except Exception:
+
+        print("\n========== RESUME API ERROR ==========")
+        traceback.print_exc()
+        print("======================================\n")
+
         raise HTTPException(
             status_code=500,
-            detail=str(e),
+            detail="Something went wrong while analyzing your resume. Please try again."
         )

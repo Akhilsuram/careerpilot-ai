@@ -2,12 +2,13 @@ import time
 from backend.utils.response_builder import ResponseBuilder
 from backend.agents.interview_agent import InterviewAgent
 from backend.tools.interview_formatter import InterviewFormatter
-
+from backend.repositories.dashboard_repository import DashboardRepository
 
 class InterviewService:
 
     def __init__(self):
         self.agent = InterviewAgent()
+        self.dashboard = DashboardRepository()
 
     def execute(
         self,
@@ -26,6 +27,9 @@ class InterviewService:
 
         result["questions"] = InterviewFormatter.sort_questions(
             result["questions"]
+        )
+        self.dashboard.update_interview_questions(
+            len(result["questions"])
         )
 
         processing_time = round(

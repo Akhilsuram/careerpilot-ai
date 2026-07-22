@@ -35,9 +35,11 @@ class CareerHistoryRepository:
 
         db = SessionLocal()
 
-        rows = db.query(
-            CareerHistory
-        ).all()
+        rows = (
+            db.query(CareerHistory)
+            .order_by(CareerHistory.created_at.desc())
+            .all()
+        )
 
         db.close()
 

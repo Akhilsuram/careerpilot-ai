@@ -3,7 +3,6 @@ from groq import Groq
 from backend.core.settings import settings
 from backend.providers.base_provider import BaseProvider
 
-
 class GroqProvider(BaseProvider):
 
     def __init__(self):
@@ -21,6 +20,7 @@ class GroqProvider(BaseProvider):
                 }
             ],
             temperature=0.2,
+            response_format={"type": "json_object"},
         )
 
         return response.choices[0].message.content
@@ -49,3 +49,4 @@ class GroqProvider(BaseProvider):
             return True
         except Exception:
             return False
+        

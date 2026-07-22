@@ -73,10 +73,16 @@ Resume:
         json_text = response[start:end + 1]
 
         try:
-            return JSONParser.parse(response)
+            return JSONParser.parse(json_text)
 
-        except json.JSONDecodeError as e:
-            print("\n========= JSON PARSE ERROR =========")
+        except Exception as e:
+
+            print("\n========== MODEL RESPONSE ==========")
+            print(response)
+            print("====================================")
+
+            print("\n========== JSON TEXT ==============")
             print(json_text)
-            print("====================================\n")
+            print("===================================")
+
             raise e

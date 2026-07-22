@@ -1,21 +1,39 @@
+"use client";
+
+import { useState } from "react";
+
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 
+interface Props {
+  children: React.ReactNode;
+}
+
 export default function MainLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Props) {
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  console.log("sidebarOpen =", sidebarOpen);
   return (
-    <div className="flex bg-slate-100">
 
-      <Sidebar />
+    <div className="min-h-screen bg-slate-50">
 
-      <div className="ml-72 flex min-h-screen flex-1 flex-col">
+      <Sidebar
+        open={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
 
-        <Header />
+      <div className="min-h-screen lg:ml-72">
 
-        <main className="flex-1 p-8">
+        <Header
+          onMenuClick={() => {
+            console.log("Opening sidebar");
+            setSidebarOpen(true);
+          }}
+        />
+
+        <main className="px-4 py-6 lg:px-10 lg:py-8">
 
           {children}
 
@@ -24,5 +42,7 @@ export default function MainLayout({
       </div>
 
     </div>
+
   );
+
 }

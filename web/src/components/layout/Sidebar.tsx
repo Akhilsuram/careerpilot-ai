@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import { useEffect, useRef } from "react";
 
 import {
   LayoutDashboard,
+  Sparkles,
   FileText,
   BarChart3,
   Briefcase,
@@ -13,12 +14,11 @@ import {
   Route,
   Activity,
   History,
-  Settings,
   Cpu,
   Database,
   Bot,
-  Sparkles,
 } from "lucide-react";
+
 const menu = [
   {
     name: "Dashboard",
@@ -61,102 +61,209 @@ const menu = [
     icon: Activity,
   },
   {
+    name: "AI Report",
+    href: "/report",
+    icon: Sparkles,
+  },
+  {
     name: "History",
     href: "/history",
     icon: History,
   },
-  {
-    name: "Settings",
-    href: "/settings",
-    icon: Settings,
-  },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+export default function Sidebar({
+  open,
+  onClose,
+}: SidebarProps) {
+
   const pathname = usePathname();
+  const sidebarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+
+    const saved = sessionStorage.getItem(
+      "careerpilot-sidebar-scroll"
+    );
+
+    if (saved && sidebarRef.current) {
+      sidebarRef.current.scrollTop = Number(saved);
+    }
+
+  }, []);
 
   return (
-    <aside className="fixed left-0 top-0 flex h-screen w-72 flex-col border-r bg-white shadow-sm">
+    <>
 
-      <div className="border-b p-6">
+      {/* Mobile Overlay */}
 
-        <h1 className="text-3xl font-bold text-indigo-600">
-          CareerPilot AI
-        </h1>
+      {open && (
 
-        <p className="mt-1 text-sm text-gray-500">
-          Multi-Agent Career Copilot
-        </p>
+        <div
+          className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+          onClick={() => onClose()}
+        />
 
-      </div>
+      )}
 
-      <nav className="flex-1 space-y-2 overflow-y-auto p-5">
+      {/* Sidebar */}
 
-        {menu.map((item) => {
+      <aside
+        className={`
+          fixed left-0 top-0 z-50 flex h-screen w-72 flex-col
+          border-r border-slate-200 bg-white/95 backdrop-blur-md shadow-xl
+          transition-transform duration-300
+          ${open ? "translate-x-0" : "-translate-x-full"}
+          lg:translate-x-0
+        `}
+      >
 
-          const Icon = item.icon;
+        {/* Logo */}
 
-          const active = pathname === item.href;
+        <div className="border-b border-slate-200 p-7">
 
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex items-center gap-4 rounded-xl px-4 py-3 transition-all ${
-                active
-                  ? "bg-indigo-600 text-white shadow-lg"
-                  : "text-gray-600 hover:bg-gray-100"
-              }`}
-            >
-              <Icon size={20} />
+          <Link
+            href="/dashboard"
+            className="flex items-center gap-3"
+          >
 
-              <span>{item.name}</span>
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-lg">
+              🤖
+            </div>
 
-            </Link>
-          );
-        })}
+            <div>
 
-      </nav>
+              <h1 className="text-2xl font-bold text-slate-900">
+                CareerPilot AI
+              </h1>
 
-      <div className="border-t p-5">
+              <p className="text-sm text-slate-500">
+                Multi-Agent Career Copilot
+              </p>
 
-        <h3 className="mb-4 text-sm font-semibold text-gray-500">
-          SYSTEM STATUS
-        </h3>
+            </div>
 
-        <div className="space-y-3">
+          </Link>
 
-          <div className="flex items-center gap-3">
-            <Bot size={18} className="text-green-500" />
-            <span className="text-sm">AI Agents Online</span>
+        </div>
+
+        {/* Navigation */}
+
+        <nav
+          ref={sidebarRef}
+          className="flex-1 space-y-2 overflow-y-auto p-5"
+          onScroll={(e) =>
+            sessionStorage.setItem(
+              "careerpilot-sidebar-scroll",
+              e.currentTarget.scrollTop.toString()
+            )
+          }
+        >
+
+          {menu.map((item) => {
+
+            const Icon = item.icon;
+
+            const active = pathname === item.href;
+
+            return (
+
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => onClose()}
+                className={`group flex items-center gap-4 rounded-2xl px-5 py-3 font-medium transition-all duration-200 ${
+                  active
+                    ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg"
+                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                }`}
+              >
+
+                <Icon size={20} />
+
+                <span>{item.name}</span>
+
+              </Link>
+
+            );
+
+          })}
+
+        </nav>
+
+        {/* System Status */}
+
+        <div className="border-t border-slate-200 p-6">
+
+          <h3 className="mb-4 text-sm font-semibold text-gray-500">
+            SYSTEM STATUS
+          </h3>
+
+          <div className="space-y-3">
+
+            <div className="flex items-center gap-3">
+
+              <Bot
+                size={18}
+                className="text-emerald-500"
+              />
+
+              <span className="text-sm text-slate-700">
+                AI Agents Online
+              </span>
+
+            </div>
+
+            <div className="flex items-center gap-3">
+
+              <Database
+                size={18}
+                className="text-emerald-500"
+              />
+
+              <span className="text-sm text-slate-700">
+                SQLite Connected
+              </span>
+
+            </div>
+
+            <div className="flex items-center gap-3">
+
+              <Cpu
+                size={18}
+                className="text-emerald-500"
+              />
+
+              <span className="text-sm text-slate-700">
+                Groq Ready
+              </span>
+
+            </div>
+
           </div>
 
-          <div className="flex items-center gap-3">
-            <Database size={18} className="text-green-500" />
-            <span className="text-sm">SQLite Connected</span>
-          </div>
+          <div className="mt-8 rounded-2xl border border-slate-200 bg-gradient-to-r from-slate-50 to-indigo-50 p-5">
 
-          <div className="flex items-center gap-3">
-            <Cpu size={18} className="text-green-500" />
-            <span className="text-sm">Groq Ready</span>
+            <p className="font-semibold text-slate-900">
+              👤 Akhil
+            </p>
+
+            <p className="text-sm text-gray-500">
+              AI Engineer
+            </p>
+
           </div>
 
         </div>
 
-        <div className="mt-8 rounded-xl bg-slate-100 p-4">
+      </aside>
 
-          <p className="font-semibold">
-            👤 Akhil
-          </p>
-
-          <p className="text-sm text-gray-500">
-            AI Engineer
-          </p>
-
-        </div>
-
-      </div>
-
-    </aside>
+    </>
   );
+
 }

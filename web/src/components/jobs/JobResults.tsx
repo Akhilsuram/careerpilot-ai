@@ -1,26 +1,34 @@
+import Card from "@/components/ui/Card";
+import PageHeader from "@/components/ui/PageHeader";
+
 import JobCard from "./JobCard";
+
 interface Props {
   jobs: any[];
 }
 
-export default function JobResults({ jobs }: Props) {
-
-  if (!Array.isArray(jobs) || jobs.length === 0) {
-    return (
-      <div className="rounded-3xl bg-white p-8 shadow">
-        No matching jobs found.
-      </div>
-    );
-  }
-
+export default function JobResults({
+  jobs,
+}: Props) {
   return (
-    <div className="space-y-6">
-      {jobs.map((job, index) => (
-        <JobCard
-          key={index}
-          job={job}
-        />
-      ))}
-    </div>
+    <Card>
+
+      <PageHeader
+        title="Matching Jobs"
+        subtitle={`${jobs.length} opportunities matched to your profile`}
+      />
+
+      <div className="mt-8 space-y-6">
+
+        {jobs.map((job, index) => (
+          <JobCard
+            key={index}
+            job={job}
+          />
+        ))}
+
+      </div>
+
+    </Card>
   );
 }

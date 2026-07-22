@@ -38,15 +38,14 @@ Return ONLY valid JSON.
 Do not use markdown.
 
 Output format:
-
 {{
-"overall_score":0,
+"overall_score":85,
 "category_scores":{{
-"skills":0,
-"experience":0,
-"projects":0,
-"education":0,
-"keywords":0
+"skills":90,
+"experience":75,
+"projects":80,
+"education":95,
+"keywords":85
 }},
 "matched_keywords":[],
 "missing_keywords":[],
@@ -54,6 +53,12 @@ Output format:
 "weaknesses":[],
 "recommendations":[]
 }}
+IMPORTANT:
+- overall_score MUST be an INTEGER between 0 and 100.
+- Never return decimals like 0.85 or 0.72.
+- category_scores MUST also be integers from 0 to 100.
+- Do NOT use percentages as strings.
+- Do NOT include the % symbol.
 
 Resume:
 
@@ -66,7 +71,26 @@ Job Description:
 
         response = self.provider.generate(prompt)
 
-        return JSONParser.parse(response)
+        result = JSONParser.parse(response)
+
+        overall = result.get("overall_score")
+
+        if isinstance(overall, float):
+            if overall <= 1:
+                result["overall_score"] = round(overall * 100)
+            else:
+                result["overall_score"] = round(overall)
+
+        for key, value in result.get("category_scores", {}).items():
+            if isinstance(value, float):
+                if value <= 1:
+                    result["category_scores"][key] = round(value * 100)
+                else:
+                    result["category_scores"][key] = round(value)
+
+        return result
+    
+
     def execute(
         self,
         context,

@@ -12,6 +12,7 @@ class JSONParser:
 
         response = response.strip()
 
+        # Remove markdown code blocks
         response = re.sub(
             r"^```(?:json)?",
             "",
@@ -27,6 +28,7 @@ class JSONParser:
 
         response = response.strip()
 
+        # Extract JSON object
         start = response.find("{")
         end = response.rfind("}")
 
@@ -35,4 +37,25 @@ class JSONParser:
 
         response = response[start:end + 1]
 
-        return json.loads(response)
+        # Normalize line endings
+        response = response.replace("\r", "")
+
+        # Escape invalid backslashes
+        response = re.sub(
+            r'\\(?!["\\/bfnrtu])',
+            r'\\\\',
+            response,
+        )
+
+        try:
+            return json.loads(response)
+
+        except json.JSONDecodeError as e:
+
+            print("\n========== INVALID JSON ==========\n")
+            print(response)
+            print("\n==================================\n")
+
+            raise ValueError(
+                f"Failed to parse LLM JSON: {e}"
+            )

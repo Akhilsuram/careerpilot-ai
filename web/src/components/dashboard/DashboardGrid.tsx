@@ -1,12 +1,32 @@
-import ATSChart from "../charts/ATSChart";
+"use client";
 
+import { useEffect, useState } from "react";
+
+import ATSChart from "../charts/ATSChart";
 import ActivityTimeline from "./ActivityTimeline";
 import RecommendedJobs from "./RecommendedJobs";
 import WeeklyGoals from "./WeeklyGoals";
 import UpcomingTasks from "./UpcomingTasks";
 import AIAssistant from "./AIAssistant";
 
+import { getATSHistory } from "@/services/dashboard";
+
 export default function DashboardGrid() {
+  const [chartData, setChartData] = useState<any[]>([]);
+
+  useEffect(() => {
+    loadChart();
+  }, []);
+
+  async function loadChart() {
+    try {
+      const data = await getATSHistory();
+      setChartData(data ?? []);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <div className="space-y-6">
 
@@ -14,7 +34,7 @@ export default function DashboardGrid() {
 
         <div className="col-span-2">
 
-          <ATSChart />
+          <ATSChart data={chartData} />
 
         </div>
 
