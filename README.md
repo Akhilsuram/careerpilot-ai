@@ -1,5 +1,9 @@
 # 🚀 CareerPilot AI
 
+> **Status:** ✅ Version 1.0.0 Released
+> **Development Status:** Stable
+> **Deployment:** Production Ready
+
 > An AI-powered multi-agent career copilot that helps students optimize resumes, analyze ATS scores, identify skill gaps, prepare for interviews, generate personalized learning roadmaps, and accelerate their job search.
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
@@ -10,6 +14,13 @@
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ---
+
+## 🌐 Live Demo
+
+**Frontend:** https://careerpilot-ai-ivory.vercel.app
+
+**Backend API Docs:** https://careerpilot-ai-backend-mil9.onrender.com/docs
+
 
 # 📖 Table of Contents
 
@@ -352,7 +363,7 @@ Copy
 ## Start Backend
 
 ```bash
-uvicorn backend.main:app --reload
+uvicorn backend.api.main:app --reload
 ```
 
 Backend
@@ -386,7 +397,7 @@ GROQ_API_KEY=
 
 OPENROUTER_API_KEY=
 
-DATABASE_URL=storage/database/careerpilot.db
+DATABASE_URL=sqlite:///storage/database/careerpilot.db
 
 NEXT_PUBLIC_API_URL=http://localhost:8000
 ```
@@ -410,6 +421,25 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 | GET | /history | Career History |
 
 ---
+
+# 🚀 Deployment
+
+Frontend
+
+- Vercel
+
+Backend
+
+- Render
+
+Database
+
+- SQLite
+
+AI Provider
+
+- Groq
+
 
 # 🤖 AI Workflow
 
@@ -541,6 +571,19 @@ history.png
 
 ---
 
+## ⭐ Highlights
+
+- AI-powered Multi-Agent Career Copilot
+- End-to-End Resume Analysis
+- ATS Score & Keyword Analysis
+- AI Resume Optimization
+- Personalized Job Recommendations
+- AI Interview Question Generator
+- Career Roadmap Generator
+- Persistent History & Analytics
+- Live Deployment (Render + Vercel)
+
+
 # 🚀 Future Enhancements
 
 - User Authentication
@@ -558,6 +601,17 @@ history.png
 - Admin Dashboard
 
 ---
+
+## 📌 Version
+
+Current Version
+
+v1.0.0
+
+Release Date
+
+July 2026
+
 
 # 📄 License
 
