@@ -33,7 +33,7 @@ app = FastAPI(
 origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "http://192.168.1.33:3000",
+    "https://careerpilot-ai.vercel.app",
 ]
 
 app.add_middleware(
