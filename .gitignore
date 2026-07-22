@@ -1,32 +1,71 @@
-# Virtual Environment
-.venv/
-
-# Environment Variables
-.env
-
+# =========================
 # Python
+# =========================
 __pycache__/
-*.pyc
-
-# Logs
-*.log
-
-# Database
+*.py[cod]
+*.pyo
+*.pyd
+*.sqlite3
 *.db
 
-# IDE
-.vscode/
+# =========================
+# Virtual Environment
+# =========================
+.venv/
+venv/
 
-# OS Files
+# =========================
+# Environment Variables
+# =========================
+.env
+
+# =========================
+# Node
+# =========================
+node_modules/
+.next/
+out/
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# OS
+# =========================
 .DS_Store
 Thumbs.db
 
+# =========================
+# Testing
+# =========================
+.pytest_cache/
+.coverage
+
+# =========================
+# Build
+# =========================
+dist/
+build/
+
+# =========================
+# Misc
+# =========================
+*.tmp
+*.bak
+
+# =========================
+# CareerPilot AI Storage
+# =========================
 storage/database/*.db
-
 storage/uploads/
-
 storage/temp/
-
 storage/logs/
-
-.vscode/
