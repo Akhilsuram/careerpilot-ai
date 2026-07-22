@@ -5,6 +5,7 @@ from backend.api.v1.resume import router as resume_router
 from backend.api.v1.career_history import (
     router as career_history_router,
 )
+from fastapi.middleware.cors import CORSMiddleware
 from backend.api.v1.ats import router as ats_router
 from backend.api.v1.job_match import router as job_match_router
 from backend.api.v1.interview import router as interview_router
@@ -29,15 +30,19 @@ app = FastAPI(
     version="1.0.0",
 )
 
+origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://192.168.1.33:3000",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-    ],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 app.include_router(health_router)

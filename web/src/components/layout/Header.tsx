@@ -8,16 +8,9 @@ import {
   Bell,
   Search,
   Sparkles,
-  Menu,
 } from "lucide-react";
 
-interface HeaderProps {
-  onMenuClick: () => void;
-}
-
-export default function Header({
-  onMenuClick,
-}: HeaderProps) {
+export default function Header() {
 
   const router = useRouter();
 
@@ -64,48 +57,27 @@ export default function Header({
 
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
 
-      <div className="flex h-20 items-center justify-between px-4 lg:px-10">
+      <div className="flex h-20 items-center justify-between px-10">
 
-        {/* Left */}
+        <div>
 
-        <div className="flex items-center gap-4">
+          <h1 className="text-2xl font-bold text-slate-900">
 
-          <button
-            onClick={() => {
-              alert("clicked");
-              console.log("clicked");
-              onMenuClick();
-            }}
-            className="rounded-xl p-2 hover:bg-slate-100 lg:hidden"
-          >
-            <Menu size={24} />
-          </button>
+            Welcome Back 👋
 
-          <div>
+          </h1>
 
-            <h1 className="text-xl font-bold text-slate-900 lg:text-2xl">
+          <p className="text-slate-500">
 
-              Welcome Back 👋
+            Let's build your career today.
 
-            </h1>
-
-            <p className="hidden text-slate-500 md:block">
-
-              Let's build your career today.
-
-            </p>
-
-          </div>
+          </p>
 
         </div>
 
-        {/* Right */}
+        <div className="flex items-center gap-5">
 
-        <div className="flex items-center gap-2 lg:gap-5">
-
-          {/* Search */}
-
-          <div className="hidden items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-3 md:flex">
+          <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-3">
 
             <Search
               size={18}
@@ -118,17 +90,13 @@ export default function Header({
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleSearch();
-                }
+                if (e.key === "Enter") handleSearch();
               }}
               placeholder="Search pages..."
-              className="w-full bg-transparent outline-none"
+              className="w-64 bg-transparent outline-none"
             />
 
           </div>
-
-          {/* Notifications */}
 
           <div className="relative">
 
@@ -136,7 +104,7 @@ export default function Header({
               onClick={() =>
                 setShowNotifications(!showNotifications)
               }
-              className="rounded-xl border bg-white p-3 shadow-sm transition hover:bg-slate-100"
+              className="rounded-xl border bg-white p-3 shadow-sm hover:bg-slate-100"
             >
 
               <Bell size={20} />
@@ -145,7 +113,7 @@ export default function Header({
 
             {showNotifications && (
 
-              <div className="absolute right-0 z-50 mt-3 w-80 rounded-2xl border bg-white p-5 shadow-xl">
+              <div className="absolute right-0 mt-3 w-80 rounded-2xl border bg-white p-5 shadow-xl">
 
                 <h3 className="mb-4 font-bold">
 
@@ -171,26 +139,20 @@ export default function Header({
 
           </div>
 
-          {/* AI Ready */}
-
           <div className="relative">
 
             <button
               onClick={() =>
                 setShowStatus(!showStatus)
               }
-              className="rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 py-3 font-semibold text-white shadow-lg lg:px-6"
+              className="rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-6 py-3 font-semibold text-white shadow-lg"
             >
 
               <div className="flex items-center gap-2">
 
                 <Sparkles size={18} />
 
-                <span className="hidden sm:inline">
-
-                  AI Ready
-
-                </span>
+                <span>AI Ready</span>
 
               </div>
 
@@ -198,7 +160,7 @@ export default function Header({
 
             {showStatus && (
 
-              <div className="absolute right-0 z-50 mt-3 w-72 rounded-2xl border bg-white p-5 shadow-xl">
+              <div className="absolute right-0 mt-3 w-72 rounded-2xl border bg-white p-5 shadow-xl">
 
                 <h3 className="mb-4 font-bold">
 

@@ -10334,5 +10334,606 @@
             "resume_optimizer": "Completed",
             "learning_resources": "Completed"
         }
+    },
+    {
+        "planner": {
+            "target_role": "AI Engineer",
+            "location": "",
+            "experience_level": "",
+            "focus_areas": [
+                "Machine Learning",
+                "Deep Learning",
+                "Natural Language Processing",
+                "Computer Vision"
+            ]
+        },
+        "ats": {
+            "overall_score": 88,
+            "category_scores": {
+                "skills": 92,
+                "experience": 80,
+                "projects": 85,
+                "education": 90,
+                "keywords": 88
+            },
+            "matched_keywords": [
+                "Machine Learning",
+                "Deep Learning",
+                "Python",
+                "TensorFlow",
+                "PyTorch"
+            ],
+            "missing_keywords": [
+                "Natural Language Processing",
+                "Computer Vision",
+                "Reinforcement Learning"
+            ],
+            "strengths": [
+                "Strong background in machine learning and deep learning",
+                "Experience with popular frameworks like TensorFlow and PyTorch",
+                "Good understanding of programming languages like Python and Java"
+            ],
+            "weaknesses": [
+                "Limited experience in the field of AI engineering",
+                "Lack of experience with certain AI-related tools and technologies"
+            ],
+            "recommendations": [
+                "Consider taking courses or certifications in AI-related fields to improve knowledge and skills",
+                "Gain more experience in the field of AI engineering to increase chances of getting hired"
+            ]
+        },
+        "roadmap": {
+            "estimated_duration": "6-8 weeks",
+            "roadmap": [
+                {
+                    "week": 1,
+                    "topics": [
+                        "Review of Machine Learning fundamentals",
+                        "Introduction to Deep Learning",
+                        "Python basics for AI development"
+                    ],
+                    "goals": [
+                        "Refresh knowledge of machine learning concepts",
+                        "Understand the basics of deep learning",
+                        "Set up a Python environment for AI development"
+                    ]
+                },
+                {
+                    "week": 2,
+                    "topics": [
+                        "Convolutional Neural Networks (CNNs)",
+                        "Recurrent Neural Networks (RNNs)",
+                        "Long Short-Term Memory (LSTM) networks"
+                    ],
+                    "goals": [
+                        "Understand the architecture and applications of CNNs",
+                        "Learn about RNNs and their applications",
+                        "Implement a simple LSTM network"
+                    ]
+                },
+                {
+                    "week": 3,
+                    "topics": [
+                        "Natural Language Processing (NLP) basics",
+                        "Text preprocessing and feature extraction",
+                        "Introduction to Transformers"
+                    ],
+                    "goals": [
+                        "Understand the basics of NLP",
+                        "Learn text preprocessing and feature extraction techniques",
+                        "Introduction to Transformer architecture"
+                    ]
+                },
+                {
+                    "week": 4,
+                    "topics": [
+                        "Computer Vision basics",
+                        "Object Detection and Segmentation",
+                        "Image processing techniques"
+                    ],
+                    "goals": [
+                        "Understand the basics of computer vision",
+                        "Learn object detection and segmentation techniques",
+                        "Implement image processing techniques"
+                    ]
+                },
+                {
+                    "week": 5,
+                    "topics": [
+                        "AI Ethics and Bias",
+                        "Explainability and Interpretability",
+                        "Model deployment and monitoring"
+                    ],
+                    "goals": [
+                        "Understand AI ethics and bias",
+                        "Learn about explainability and interpretability techniques",
+                        "Deploy and monitor a model"
+                    ]
+                },
+                {
+                    "week": 6,
+                    "topics": [
+                        "Specialized AI topics (e.g. Reinforcement Learning, Generative Models)",
+                        "Case studies and project development",
+                        "Preparing for AI Engineer role"
+                    ],
+                    "goals": [
+                        "Explore specialized AI topics",
+                        "Develop a project or case study",
+                        "Prepare for the AI Engineer role"
+                    ]
+                },
+                {
+                    "week": 7,
+                    "topics": [
+                        "Review and practice of AI concepts",
+                        "Mock interviews and whiteboarding",
+                        "Final project development"
+                    ],
+                    "goals": [
+                        "Review and practice AI concepts",
+                        "Prepare for technical interviews",
+                        "Complete a final project"
+                    ]
+                },
+                {
+                    "week": 8,
+                    "topics": [
+                        "Final project presentation",
+                        "Career development and job search strategies",
+                        "Continued learning and professional development"
+                    ],
+                    "goals": [
+                        "Present a final project",
+                        "Develop a career development plan",
+                        "Create a plan for continued learning and professional development"
+                    ]
+                }
+            ]
+        },
+        "skill_gap": {
+            "missing_skills": [
+                "Natural Language Processing",
+                "Computer Vision",
+                "Reinforcement Learning",
+                "Cloud Computing (AWS/Azure/Google Cloud)",
+                "Docker",
+                "Kubernetes"
+            ],
+            "recommended_courses": [
+                "Stanford CS231n: Convolutional Neural Networks for Visual Recognition",
+                "Andrew Ng's Machine Learning Course",
+                "DeepLearning.ai Specialization",
+                "Natural Language Processing with Deep Learning"
+            ],
+            "recommended_projects": [
+                "Develop a chatbot using NLP and deep learning",
+                "Build a computer vision model for object detection",
+                "Create a reinforcement learning model for game playing",
+                "Deploy a machine learning model on a cloud platform"
+            ],
+            "priority_skills": [
+                "PyTorch",
+                "TensorFlow",
+                "Scikit-learn",
+                "OpenCV",
+                "Federated Learning",
+                "Cloud Computing"
+            ]
+        },
+        "job_match": {
+            "jobs": [
+                {
+                    "company": "Google",
+                    "role": "AI Engineer",
+                    "location": "New York",
+                    "match_score": 85,
+                    "required_skills": [
+                        "Python",
+                        "Machine Learning",
+                        "Deep Learning",
+                        "TensorFlow"
+                    ],
+                    "missing_skills": [
+                        "Cloud Computing"
+                    ],
+                    "reason": "The candidate has a strong background in machine learning and deep learning, with experience in TensorFlow, making them a good fit for this role."
+                },
+                {
+                    "company": "Microsoft",
+                    "role": "AI/ML Engineer",
+                    "location": "Seattle",
+                    "match_score": 80,
+                    "required_skills": [
+                        "Python",
+                        "Java",
+                        "Machine Learning",
+                        "Scikit-learn"
+                    ],
+                    "missing_skills": [
+                        "Azure"
+                    ],
+                    "reason": "The candidate's experience in machine learning and programming languages like Python and Java makes them suitable for this role."
+                },
+                {
+                    "company": "Amazon",
+                    "role": "Applied Scientist - AI/ML",
+                    "location": "San Francisco",
+                    "match_score": 82,
+                    "required_skills": [
+                        "Python",
+                        "Machine Learning",
+                        "Deep Learning",
+                        "PyTorch"
+                    ],
+                    "missing_skills": [
+                        "AWS"
+                    ],
+                    "reason": "The candidate's strong background in machine learning and deep learning, with experience in PyTorch, makes them a good fit for this role."
+                },
+                {
+                    "company": "Facebook",
+                    "role": "AI Engineer",
+                    "location": "Menlo Park",
+                    "match_score": 85,
+                    "required_skills": [
+                        "Python",
+                        "Machine Learning",
+                        "Deep Learning",
+                        "OpenCV"
+                    ],
+                    "missing_skills": [
+                        "Facebook's internal tools"
+                    ],
+                    "reason": "The candidate's experience in machine learning, deep learning, and computer vision makes them suitable for this role."
+                },
+                {
+                    "company": "IBM",
+                    "role": "AI/ML Engineer",
+                    "location": "Armonk",
+                    "match_score": 78,
+                    "required_skills": [
+                        "Python",
+                        "Java",
+                        "Machine Learning",
+                        "SQL"
+                    ],
+                    "missing_skills": [
+                        "IBM Cloud"
+                    ],
+                    "reason": "The candidate's experience in machine learning and programming languages like Python and Java makes them suitable for this role."
+                },
+                {
+                    "company": "NVIDIA",
+                    "role": "AI/ML Engineer",
+                    "location": "Santa Clara",
+                    "match_score": 80,
+                    "required_skills": [
+                        "Python",
+                        "Machine Learning",
+                        "Deep Learning",
+                        "PyTorch"
+                    ],
+                    "missing_skills": [
+                        "GPU programming"
+                    ],
+                    "reason": "The candidate's strong background in machine learning and deep learning, with experience in PyTorch, makes them a good fit for this role."
+                },
+                {
+                    "company": "Palantir",
+                    "role": "AI/ML Engineer",
+                    "location": "Palo Alto",
+                    "match_score": 82,
+                    "required_skills": [
+                        "Python",
+                        "Machine Learning",
+                        "Deep Learning",
+                        "SQL"
+                    ],
+                    "missing_skills": [
+                        "Palantir's internal tools"
+                    ],
+                    "reason": "The candidate's experience in machine learning and data analysis makes them suitable for this role."
+                },
+                {
+                    "company": "Tesla",
+                    "role": "AI/ML Engineer",
+                    "location": "Palo Alto",
+                    "match_score": 85,
+                    "required_skills": [
+                        "Python",
+                        "Machine Learning",
+                        "Deep Learning",
+                        "Computer Vision"
+                    ],
+                    "missing_skills": [
+                        "Autonomous driving"
+                    ],
+                    "reason": "The candidate's strong background in machine learning and computer vision makes them a good fit for this role."
+                },
+                {
+                    "company": "Uber",
+                    "role": "AI/ML Engineer",
+                    "location": "San Francisco",
+                    "match_score": 80,
+                    "required_skills": [
+                        "Python",
+                        "Machine Learning",
+                        "Deep Learning",
+                        "SQL"
+                    ],
+                    "missing_skills": [
+                        "Uber's internal tools"
+                    ],
+                    "reason": "The candidate's experience in machine learning and data analysis makes them suitable for this role."
+                }
+            ]
+        },
+        "learning_resources": {
+            "courses": [
+                "Stanford University's Machine Learning Course",
+                "Andrew Ng's Deep Learning Course",
+                "MIT's Introduction to Computer Science and Programming in Python",
+                "Coursera's Artificial Intelligence Specialization",
+                "edX's Artificial Intelligence (AI) Course"
+            ],
+            "youtube_channels": [
+                "3Blue1Brown",
+                "Machine Learning Mastery",
+                "Sentdex",
+                "Siraj Raval",
+                "Two Minute Papers"
+            ],
+            "books": [
+                "Deep Learning by Ian Goodfellow, Yoshua Bengio, and Aaron Courville",
+                "Pattern Recognition and Machine Learning by Christopher Bishop",
+                "Artificial Intelligence: A Modern Approach by Stuart Russell and Peter Norvig",
+                "Machine Learning by Tom Mitchell",
+                "Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow by Aur\u00e9lien G\u00e9ron"
+            ],
+            "websites": [
+                "Kaggle",
+                "Towards Data Science",
+                "KDnuggets",
+                "Machine Learning Mastery",
+                "AI Alignment Forum"
+            ],
+            "certifications": [
+                "Certified Data Scientist by Data Science Council of America",
+                "Certified Machine Learning Engineer by International Association for Machine Learning and Artificial Intelligence",
+                "Google Cloud Certified - Professional Machine Learning Engineer",
+                "Microsoft Certified: Azure AI Engineer Associate",
+                "IBM Data Science Experience Certification"
+            ]
+        },
+        "interview": {
+            "questions": [
+                {
+                    "category": "HR",
+                    "difficulty": "Easy",
+                    "question": "Can you tell me about your background and why you are interested in this AI Engineer role?",
+                    "answer": "I have a strong foundation in computer science and data science, with experience in machine learning and deep learning. I am excited about this role because it aligns with my skills and interests, and I am eager to contribute to the development of AI solutions."
+                },
+                {
+                    "category": "Behavioral",
+                    "difficulty": "Medium",
+                    "question": "Can you describe a situation where you had to work with a team to complete a project, and how you handled any challenges that arose?",
+                    "answer": "In my previous internship, I worked with a team to develop a machine learning model. We encountered some challenges with data quality, but we were able to overcome them by communicating effectively and working together to find solutions. I learned the importance of teamwork and collaboration in achieving a common goal."
+                },
+                {
+                    "category": "Projects",
+                    "difficulty": "Medium",
+                    "question": "Can you walk me through your Customer Churn Prediction project, and how you approached the problem?",
+                    "answer": "I developed a machine learning model using Python, Scikit-Learn, and XG Boost to predict customer churn. I started by exploring the data, then split it into training and testing sets. I trained and tuned the model, and evaluated its performance using metrics such as accuracy and precision. The model was able to predict customer churn with a high degree of accuracy."
+                },
+                {
+                    "category": "Python",
+                    "difficulty": "Easy",
+                    "question": "What is your experience with Python, and how have you used it in your projects?",
+                    "answer": "I have used Python extensively in my projects, including the Customer Churn Prediction project. I am familiar with popular libraries such as NumPy, Pandas, and Scikit-Learn, and have used them for data analysis, machine learning, and data visualization. I am also comfortable with Python syntax and data structures."
+                },
+                {
+                    "category": "SQL",
+                    "difficulty": "Medium",
+                    "question": "Can you write a SQL query to retrieve the top 10 customers with the highest average order value?",
+                    "answer": "SELECT customer_id, AVG(order_value) AS average_order_value FROM orders GROUP BY customer_id ORDER BY average_order_value DESC LIMIT 10. This query retrieves the customer_id and average order value for each customer, and returns the top 10 customers with the highest average order value."
+                },
+                {
+                    "category": "Machine Learning",
+                    "difficulty": "Hard",
+                    "question": "Can you explain the concept of overfitting in machine learning, and how you would address it in a model?",
+                    "answer": "Overfitting occurs when a model is too complex and fits the training data too closely, resulting in poor performance on unseen data. To address overfitting, I would use techniques such as regularization, early stopping, and cross-validation. I would also consider simplifying the model or using ensemble methods to improve its generalizability."
+                },
+                {
+                    "category": "DSA",
+                    "difficulty": "Medium",
+                    "question": "Can you implement a binary search algorithm to find an element in a sorted array?",
+                    "answer": "I would start by defining the search space and the target element. Then, I would repeatedly divide the search space in half and search for the target element in one of the two halves. This process would continue until the target element is found or the search space is empty. The algorithm would have a time complexity of O(log n)."
+                },
+                {
+                    "category": "HR",
+                    "difficulty": "Easy",
+                    "question": "What are your long-term career goals, and how does this AI Engineer role fit into your plans?",
+                    "answer": "My long-term career goal is to become a leading expert in AI and machine learning. This AI Engineer role is a key step in achieving that goal, as it will provide me with the opportunity to work on challenging projects and develop my skills in a dynamic and supportive environment."
+                },
+                {
+                    "category": "Behavioral",
+                    "difficulty": "Medium",
+                    "question": "Can you describe a situation where you had to learn a new skill or technology quickly, and how you approached the learning process?",
+                    "answer": "In my previous internship, I had to learn TensorFlow and PyTorch in a short amount of time. I approached the learning process by starting with the basics and gradually moving on to more advanced topics. I also practiced implementing projects and models using the new skills, which helped me to reinforce my understanding and build confidence."
+                },
+                {
+                    "category": "Projects",
+                    "difficulty": "Medium",
+                    "question": "Can you walk me through your Online Market Place project, and how you approached the development process?",
+                    "answer": "I developed the Online Market Place using the MERN Stack. I started by designing the database schema and API endpoints, then moved on to implementing the front-end and back-end logic. I used React.js for the front-end, Node.js and Express.js for the back-end, and MongoDB for the database. The project was a full-stack application with a scalable and responsive interface."
+                },
+                {
+                    "category": "Python",
+                    "difficulty": "Medium",
+                    "question": "Can you explain the concept of decorators in Python, and how you would use them in a project?",
+                    "answer": "Decorators in Python are a special type of function that can modify or extend the behavior of another function. I would use decorators to implement logging, authentication, or caching in a project. For example, I could use a decorator to log the input and output of a function, or to check if a user is authenticated before allowing them to access a certain resource."
+                },
+                {
+                    "category": "SQL",
+                    "difficulty": "Easy",
+                    "question": "Can you write a SQL query to retrieve all customers who have placed an order in the last 30 days?",
+                    "answer": "SELECT customer_id FROM orders WHERE order_date > NOW() - INTERVAL 30 DAY. This query retrieves the customer_id for all customers who have placed an order in the last 30 days."
+                },
+                {
+                    "category": "Machine Learning",
+                    "difficulty": "Hard",
+                    "question": "Can you explain the concept of transfer learning in machine learning, and how you would apply it in a project?",
+                    "answer": "Transfer learning is a technique where a model trained on one task is used as a starting point for another related task. I would apply transfer learning in a project by using a pre-trained model as a base and fine-tuning it on my own dataset. This can save time and improve performance, as the pre-trained model has already learned general features and patterns that can be applied to the new task."
+                },
+                {
+                    "category": "DSA",
+                    "difficulty": "Medium",
+                    "question": "Can you implement a sorting algorithm to sort an array of integers in ascending order?",
+                    "answer": "I would use the quicksort algorithm, which has an average time complexity of O(n log n). The algorithm works by selecting a pivot element, partitioning the array around the pivot, and recursively sorting the subarrays. The algorithm is efficient and scalable, making it suitable for large datasets."
+                },
+                {
+                    "category": "HR",
+                    "difficulty": "Easy",
+                    "question": "What do you think are the most important qualities and skills for an AI Engineer to have, and how do you embody those qualities?",
+                    "answer": "I think the most important qualities and skills for an AI Engineer to have are a strong foundation in computer science and mathematics, experience with machine learning and deep learning, and excellent problem-solving and communication skills. I embody those qualities through my academic background, project experience, and passion for learning and innovation."
+                },
+                {
+                    "category": "Behavioral",
+                    "difficulty": "Medium",
+                    "question": "Can you describe a situation where you had to handle a difficult team member or stakeholder, and how you approached the situation?",
+                    "answer": "In my previous internship, I had to work with a team member who had a different work style and communication approach. I approached the situation by being open-minded, flexible, and respectful. I made an effort to understand their perspective and needs, and found ways to compromise and collaborate effectively. The outcome was positive, and we were able to deliver a successful project."
+                }
+            ]
+        },
+        "resume_optimizer": {
+            "resume_score": 92,
+            "optimized_summary": "Highly motivated and detail-oriented AI Engineer with a strong foundation in machine learning, deep learning, and data science. Proficient in a range of programming languages, including Python, Java, and C, with experience in developing end-to-end machine learning workflows and implementing supervised learning models.",
+            "optimized_skills": [
+                "Python",
+                "Java",
+                "SQL",
+                "Machine Learning",
+                "Deep Learning",
+                "Scikit-learn",
+                "TensorFlow",
+                "PyTorch",
+                "OpenCV",
+                "Federated Learning",
+                "NumPy",
+                "Pandas",
+                "Matplotlib",
+                "MYSQL",
+                "MongoDB",
+                "Git",
+                "GitHub",
+                "Postman",
+                "Jupyter Notebook",
+                "VS Code",
+                "React.js",
+                "Node.js",
+                "Express.js"
+            ],
+            "optimized_projects": [
+                {
+                    "name": "Customer Churn Prediction",
+                    "technologies": [
+                        "Python",
+                        "Scikit-Learn",
+                        "Pandas",
+                        "XG Boost"
+                    ],
+                    "description": "Developed a predictive machine learning model to forecast customer churn, utilizing Python, Scikit-Learn, Pandas, and XG Boost to drive business growth and improve customer retention."
+                },
+                {
+                    "name": "Online Market Place using MERN Stack",
+                    "technologies": [
+                        "React.js",
+                        "Node.js",
+                        "Express.js",
+                        "MongoDB"
+                    ],
+                    "description": "Designed and developed a scalable and responsive full-stack online marketplace using the MERN stack, incorporating React.js, Node.js, Express.js, and MongoDB to deliver a seamless user experience."
+                }
+            ],
+            "optimized_experience": [
+                {
+                    "role": "Machine Learning & Data Science Intern",
+                    "company": "AD Infocom Systems",
+                    "duration": "MAY 2026-JUN 2026",
+                    "responsibilities": [
+                        "Designed and implemented end-to-end machine learning workflows, leveraging statistical analysis and data visualization techniques to drive business insights.",
+                        "Applied data preprocessing, feature engineering, and model evaluation to optimize machine learning model performance."
+                    ]
+                },
+                {
+                    "role": "Machine Learning Intern",
+                    "company": "NIELIT",
+                    "duration": "Aug 2024 \u2013 Oct 2024",
+                    "responsibilities": [
+                        "Improved supervised learning model accuracy by 12% through feature engineering and hyperparameter tuning, resulting in enhanced predictive capabilities.",
+                        "Implemented end-to-end ML pipelines, streamlining data ingestion, processing, and model deployment to facilitate efficient model development and deployment."
+                    ]
+                }
+            ],
+            "recommendations": [
+                "Utilize ATS keywords such as 'machine learning', 'deep learning', 'natural language processing', and 'computer vision' to enhance resume discoverability.",
+                "Incorporate relevant certifications, such as 'Certified Data Scientist' or 'Certified Machine Learning Engineer', to demonstrate expertise and commitment to the field.",
+                "Highlight soft skills, such as 'communication', 'teamwork', and 'problem-solving', to showcase ability to collaborate and drive project success."
+            ],
+            "strengths": [
+                "Strong technical skills in machine learning, deep learning, and data science",
+                "Experience in developing end-to-end machine learning workflows and implementing supervised learning models",
+                "Proficiency in a range of programming languages, including Python, Java, and C",
+                "Excellent academic record, with a CGPA of 9.71/10",
+                "Relevant internship experience in machine learning and data science"
+            ],
+            "improvements": [
+                "Limited work experience, with only two internships completed",
+                "Lack of direct experience in AI engineering, with most experience focused on machine learning and data science",
+                "No notable achievements or awards mentioned in the resume",
+                "Limited visibility of soft skills, such as communication, teamwork, and problem-solving",
+                "No clear career progression or long-term goals stated in the resume"
+            ]
+        },
+        "final_report": {
+            "summary": "Your ATS score is 88. Resume score is 92. You have 6 missing skills and 9 recommended job matches.",
+            "strengths": [
+                "Strong background in machine learning and deep learning",
+                "Experience with popular frameworks like TensorFlow and PyTorch",
+                "Good understanding of programming languages like Python and Java",
+                "Utilize ATS keywords such as 'machine learning', 'deep learning', 'natural language processing', and 'computer vision' to enhance resume discoverability.",
+                "Incorporate relevant certifications, such as 'Certified Data Scientist' or 'Certified Machine Learning Engineer', to demonstrate expertise and commitment to the field."
+            ],
+            "weaknesses": [
+                "Natural Language Processing",
+                "Computer Vision",
+                "Reinforcement Learning",
+                "Cloud Computing (AWS/Azure/Google Cloud)",
+                "Docker",
+                "Kubernetes"
+            ],
+            "next_steps": [
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "career_advice": "Continue improving your resume, close the identified skill gaps, practice interview questions regularly, and apply consistently to roles that closely match your profile."
+        },
+        "execution": {
+            "id": "f8121530-6f48-48d7-9058-4c615a8e890f",
+            "timestamp": "2026-07-22T16:13:04.239802"
+        },
+        "agent_status": {
+            "ats": "Completed",
+            "job_match": "Completed",
+            "interview": "Completed",
+            "roadmap": "Completed",
+            "skill_gap": "Completed",
+            "resume_optimizer": "Completed",
+            "learning_resources": "Completed"
+        }
     }
 ]
