@@ -5,6 +5,10 @@ from backend.api.v1.resume import router as resume_router
 from backend.api.v1.career_history import (
     router as career_history_router,
 )
+from contextlib import asynccontextmanager
+from backend.database.init_db import init_database
+from backend.database.init_db import init_database
+from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 from backend.api.v1.ats import router as ats_router
 from backend.api.v1.job_match import router as job_match_router
@@ -25,9 +29,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.api.v1 import career_copilot
 
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_database()
+    yield
+
+
 app = FastAPI(
     title="CareerPilot AI",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 origins = [

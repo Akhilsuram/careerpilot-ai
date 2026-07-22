@@ -9,6 +9,10 @@ from backend.core.settings import settings
 db_dir = Path("storage/database")
 db_dir.mkdir(parents=True, exist_ok=True)
 
+Path("storage/database").mkdir(
+    parents=True,
+    exist_ok=True
+)
 engine = create_engine(
     settings.DATABASE_URL,
     echo=False,
