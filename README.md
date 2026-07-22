@@ -196,6 +196,54 @@ The system uses multiple specialized AI agents orchestrated through a central wo
 
 ```
 
+# 🏗 System Architecture 2
+
+```mermaid
+flowchart TD
+
+    U[👤 User]
+
+    F[Next.js Frontend<br/>React + TypeScript]
+
+    B[FastAPI Backend]
+
+    O[Career Copilot Orchestrator]
+
+    U --> F
+    F --> B
+    B --> O
+
+    RA[Resume Agent]
+    ATS[ATS Analyzer]
+    CR[Career Report Generator]
+    RO[Resume Optimizer]
+    JR[Job Recommendation Agent]
+    IA[Interview Preparation Agent]
+    RM[Career Roadmap Agent]
+
+    O --> RA
+    O --> ATS
+    O --> CR
+    O --> RO
+    O --> JR
+    O --> IA
+    O --> RM
+
+    LLM[LLM Providers<br/>Groq<br/>OpenRouter]
+
+    RA --> LLM
+    ATS --> LLM
+    CR --> LLM
+    RO --> LLM
+    JR --> LLM
+    IA --> LLM
+    RM --> LLM
+
+    DB[(SQLite Database)]
+
+    LLM --> DB
+```
+
 ---
 
 # 📂 Folder Structure
